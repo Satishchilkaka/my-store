@@ -1,10 +1,12 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import theme from './styles/theme';
+import Header from './components/Header';
 
-function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
+function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <Header />
       <Component {...pageProps} />
     </ChakraProvider>
   );

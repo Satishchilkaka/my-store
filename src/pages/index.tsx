@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Box, ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 import Header from '../components/Header';
 
 const Home: NextPage = () => {

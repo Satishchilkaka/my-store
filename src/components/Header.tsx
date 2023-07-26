@@ -3,7 +3,7 @@ import { Flex, Switch, useColorMode } from '@chakra-ui/react';
 
 const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
 
   const handleToggle = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -18,7 +18,7 @@ const Header = () => {
       p={4}
       bg={isDarkMode ? 'gray.800' : 'gray.200'}
     >
-      <h1>My Website</h1>
+      <h1 color="white">Weather report</h1>
       <Switch isChecked={isDarkMode} onChange={handleToggle} />
     </Flex>
   );
