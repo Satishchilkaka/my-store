@@ -1,12 +1,16 @@
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { NextPage } from 'next';
+import { Box, ChakraProvider } from '@chakra-ui/react';
+import Header from '../components/Header';
 
-const Home = () => {
+const Home: NextPage = () => {
   return (
-    <Flex>
+    <ChakraProvider>
       <Box>
-        <Text>Home</Text>
+        <Header />
+        {/* Add the rest of your page content here */}
       </Box>
-    </Flex>
+    </ChakraProvider>
   );
 };
+
 export default Home;
