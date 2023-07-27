@@ -1,11 +1,11 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import Header from './Header';
 
-const Layout = ({ children }) => {
+
+const Layout = ({  }) => {
   return (
     <ChakraProvider>
-      <Header />
-      {children}
+   
+    
       {/* You can include other common layout elements here */}
     </ChakraProvider>
   );
