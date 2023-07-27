@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     <ChakraProvider>
       <Box>
         <Header />
-        {/* Add the rest of your page content here */}
+        <Home/>
       </Box>
     </ChakraProvider>
   );

@@ -16,9 +16,9 @@ const Header = () => {
       align="center"
       justify="space-between"
       p={4}
-      bg={isDarkMode ? 'gray.800' : 'gray.200'}
+      bg={isDarkMode ? '#2C4377' : '#666666'}
     >
-      <h1 color="white">Weather report</h1>
+      <h1>Weather report</h1>
       <Switch isChecked={isDarkMode} onChange={handleToggle} />
     </Flex>
   );
