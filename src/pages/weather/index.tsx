@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/weatherAPI';
 import { Flex, Heading, Text } from '@chakra-ui/react';
