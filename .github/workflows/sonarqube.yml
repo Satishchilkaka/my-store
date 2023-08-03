@@ -17,8 +17,8 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: npm install
-      - name: SonarQube scan      
-        uses: sonarsource/sonarqube-scan-action@master
+      - name: Official SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
