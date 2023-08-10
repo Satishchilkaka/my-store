@@ -1,48 +1,56 @@
 import React, { useState } from 'react'; // Import useState
 import { fetchWeatherData } from '../../util/currentWeather';
-import { Box, Button, Flex, FormControl, Heading, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, Heading, Input, Select, Text } from '@chakra-ui/react';
 import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 import { WeatherData } from '@/types/weatherData';
 
-
+import cityData from '../../assets/cityNames.json'
 
 
 const WeatherPage = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [cityName, setCityName] = useState<string>('');
+
+  const [selectedCity, setSelectedCity] = useState<string>('');
 
   const handleGetWeather = () => {
-    fetchWeatherData(cityName) 
+    fetchWeatherData(selectedCity) 
       .then((data) => setWeatherData(data))
       .catch((error) => console.error('Error fetching weather data:', error));
   };
 
   const isValidInput = () => {
-    return (cityName !== '')
+    return (selectedCity !== '')
       
     
   }
 
+  console.log('selectedCity',selectedCity)
   return (
     <><Flex alignContent={'center'} ml={'25px'} mt={'30px'}>
 
       <Box>
         <Heading mb={5}>Current Weather</Heading>
         <FormControl>
-          <label>Enter your city name:</label>
-          <Input
-            type='text'
+          <label>Select a city name:</label>
+          <Select
             name='cityName'
-            placeholder='Enter city name'
+            placeholder='Select city'
             mt={1}
             borderRadius={'10px'}
             borderColor={'#FFFFF'}
             maxW={'250px'}
-            value={cityName}
-            onChange={(e) => setCityName(e.target.value)} />
+            value={selectedCity}
+            onChange={(e) => setSelectedCity(e.target.value)}
+          >
+            {cityData.map((cityNames) => (
+              <option key={cityNames.iata_code} value={cityNames.city}>
+                {cityNames.city}
+              </option>
+            ))}
+          </Select>
         </FormControl>
         <Box mt={3}>
-          <Button bg={'#4391F2'} onClick={handleGetWeather} isDisabled={!isValidInput()}>
+          <Button bg={'#4391F2'} onClick={handleGetWeather}>
             Get Weather Data
           </Button>
         </Box>
