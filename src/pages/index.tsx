@@ -9,6 +9,7 @@ const Home: NextPage = () => {
       <Box>
         <Header />
         <Weather/>
+       
       </Box>
     </ChakraProvider>
   );

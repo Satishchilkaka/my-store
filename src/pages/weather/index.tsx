@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; // Import useState
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading, Input, Text } from '@chakra-ui/react';
+import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 
 interface WeatherData {
   location: {
@@ -33,10 +34,10 @@ const WeatherPage = () => {
   }
 
   return (
-    <Flex alignContent={'center'} ml={'100px'} mt={'70px'}>
-      
+    <><Flex alignContent={'center'} ml={'100px'} mt={'70px'}>
+
       <Box>
-      <Heading mb={5}>current Weather</Heading>
+        <Heading mb={5}>current Weather</Heading>
         <FormControl>
           <label>Enter your city name:</label>
           <Input
@@ -47,13 +48,11 @@ const WeatherPage = () => {
             borderRadius={'10px'}
             borderColor={'#FFFFF'}
             maxW={'250px'}
-            value={cityName} 
-            onChange={(e) => setCityName(e.target.value)} 
-            
-          />
+            value={cityName}
+            onChange={(e) => setCityName(e.target.value)} />
         </FormControl>
-        <Box mt={3} >
-          <Button bg={'#4391F2'} onClick={handleGetWeather}  isDisabled = {!isValidInput()}>
+        <Box mt={3}>
+          <Button bg={'#4391F2'} onClick={handleGetWeather} isDisabled={!isValidInput()}>
             Get Weather Data
           </Button>
         </Box>
@@ -70,7 +69,7 @@ const WeatherPage = () => {
           <Text fontSize="md">Local time: {weatherData.location.localtime}</Text>
         </Box>
       )}
-    </Flex>
+    </Flex><ForecastWeather /></>
    
   );
 };
