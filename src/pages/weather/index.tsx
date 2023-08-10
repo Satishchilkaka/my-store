@@ -2,24 +2,14 @@ import React, { useState } from 'react'; // Import useState
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading, Input, Text } from '@chakra-ui/react';
 import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
+import { WeatherData } from '@/types/weatherData';
 
-interface WeatherData {
-  location: {
-    name: string;
-    country: string;
-    localtime: string;
-  };
-  current: {
-    temp_c: number;
-    condition: {
-      text: string;
-    };
-  };
-}
+
+
 
 const WeatherPage = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [cityName, setCityName] = useState<string>(''); // State to store the entered city name
+  const [cityName, setCityName] = useState<string>('');
 
   const handleGetWeather = () => {
     fetchWeatherData(cityName) 
@@ -34,10 +24,10 @@ const WeatherPage = () => {
   }
 
   return (
-    <><Flex alignContent={'center'} ml={'100px'} mt={'70px'}>
+    <><Flex alignContent={'center'} ml={'25px'} mt={'30px'}>
 
       <Box>
-        <Heading mb={5}>current Weather</Heading>
+        <Heading mb={5}>Current Weather</Heading>
         <FormControl>
           <label>Enter your city name:</label>
           <Input
@@ -58,9 +48,9 @@ const WeatherPage = () => {
         </Box>
       </Box>
 
-      {/* Display weather data if available */}
+      
       {weatherData && (
-        <Box mt={4}>
+        <Box mt={5} ml={5}>
           <Heading as="h2" size="md">
             Current Weather in {weatherData.location.name}, {weatherData.location.country}
           </Heading>

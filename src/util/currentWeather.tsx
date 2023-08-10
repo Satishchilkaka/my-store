@@ -15,12 +15,12 @@ export async function fetchWeatherData(city: string) {
   return data;
 }
 
-export async function getForecastWeatherer(city: string) { 
+export async function getForecastWeather(city: string) { 
   if (!API_KEY) {
     throw new Error('Weather API key not found. Please set the WEATHER');
   }
   const response = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?${API_KEY}&q=${city}&days=1`
+    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1`
   );
   const forecastData = await response.json();
 
