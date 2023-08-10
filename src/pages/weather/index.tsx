@@ -34,8 +34,9 @@ const WeatherPage = () => {
 
   return (
     <Flex alignContent={'center'} ml={'100px'} mt={'70px'}>
-      <Heading>current Weather</Heading>
+      
       <Box>
+      <Heading mb={5}>current Weather</Heading>
         <FormControl>
           <label>Enter your city name:</label>
           <Input
@@ -70,6 +71,7 @@ const WeatherPage = () => {
         </Box>
       )}
     </Flex>
+   
   );
 };
 
