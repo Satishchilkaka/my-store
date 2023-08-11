@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Import useState
 import { fetchWeatherData } from '../../util/currentWeather';
-import { Box, Button, Flex, FormControl, Heading, Input, Select, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, Heading, Input, Select, Text, border } from '@chakra-ui/react';
 import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 import { WeatherData } from '@/types/weatherData';
 
@@ -10,7 +10,7 @@ import cityData from '../../assets/cityNames.json'
 const WeatherPage = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
-  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState<string>('Select');
 
   const handleGetWeather = () => {
     fetchWeatherData(selectedCity) 
@@ -32,13 +32,17 @@ const WeatherPage = () => {
         <Heading mb={5}>Current Weather</Heading>
         <FormControl>
           <label>Select a city name:</label>
-          <Select
+          <select
             name='cityName'
             placeholder='Select city'
-            mt={1}
-            borderRadius={'10px'}
-            borderColor={'#FFFFF'}
-            maxW={'250px'}
+          style= {{
+            borderRadius: '10px',
+            borderColor: '#FFFFFF',
+            width: '70%',
+            minHeight: '40px'
+          }}
+            
+            
             value={selectedCity}
             onChange={(e) => setSelectedCity(e.target.value)}
           >
@@ -47,7 +51,7 @@ const WeatherPage = () => {
                 {cityNames.city}
               </option>
             ))}
-          </Select>
+          </select>
         </FormControl>
         <Box mt={3}>
           <Button bg={'#4391F2'} onClick={handleGetWeather}>

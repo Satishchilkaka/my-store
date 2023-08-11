@@ -33,6 +33,7 @@ export const ForecastWeather = () => {
           borderRadius={"10px"}
           borderColor={"#FFFFF"}
           maxW={"250px"}
+          width='70%'
           value={cityName}
           onChange={(e) => setCityName(e.target.value)}
         />
