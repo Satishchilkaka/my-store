@@ -37,9 +37,9 @@ const WeatherPage = () => {
             placeholder='Select city'
           style= {{
             borderRadius: '10px',
-            borderColor: '#FFFFFF',
             width: '70%',
-            minHeight: '40px'
+            minHeight: '40px',
+            
           }}
             
             
