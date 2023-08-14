@@ -1,6 +1,6 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
-import { Box, Button, Flex, FormControl, Heading, Input, Select, Text, border } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, Heading, Text } from '@chakra-ui/react';
 import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 import { WeatherData } from '@/types/weatherData';
 
@@ -54,7 +54,7 @@ const WeatherPage = () => {
           </select>
         </FormControl>
         <Box mt={3}>
-          <Button bg={'#4391F2'} onClick={handleGetWeather}>
+          <Button bg={'#4391F2'} onClick={handleGetWeather} isDisabled={!isValidInput()}>
             Get Weather Data
           </Button>
         </Box>
