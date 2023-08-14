@@ -1,12 +1,24 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import theme from './styles/theme';
-import Header from './components/Header';
+import React from 'react';
+import { ChakraProvider, Box, CSSReset, extendTheme } from '@chakra-ui/react';
+import { AppProps } from 'next/app';
+import {ThemeToggle} from './components/ThemeToggle';
+import { WeatherNavigation } from '@/components/WeatherNavigation';
 
-function MyApp({ Component, pageProps }) {
+const theme = extendTheme({
+  // Your Chakra UI theme configuration
+});
+
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Header />
-      <Component {...pageProps} />
+      <CSSReset />
+      <Box>
+        {/* <WeatherNavigation /> */}
+        <Component {...pageProps} />
+      </Box>
+      <Box position="fixed" bottom={4} right={4}>
+        <ThemeToggle />
+      </Box>
     </ChakraProvider>
   );
 }

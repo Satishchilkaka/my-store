@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Flex, Switch, useColorMode } from '@chakra-ui/react';
+import {WeatherNavigation} from '@/components/WeatherNavigation';
 
-const Header = () => {
+export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { toggleColorMode } = useColorMode();
 
@@ -18,10 +19,11 @@ const Header = () => {
       p={4}
       bg={isDarkMode ? '#2C4377' : '#666666'}
     >
-      <h1>Weather report</h1>
-      <Switch isChecked={isDarkMode} onChange={handleToggle} />
+    <WeatherNavigation/>
+    <h1>Weather </h1>
+      <Switch isChecked={isDarkMode} onChange={handleToggle}  />
     </Flex>
   );
 };
 
-export default Header;
+

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
-import { Box, Button, Flex, FormControl, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl,  Heading, Text } from '@chakra-ui/react';
 import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 import { WeatherData } from '@/types/weatherData';
 
 import cityData from '../../assets/cityNames.json'
-import {  SubscribeForm } from '@/components/forms/subscribeForm';
+import {  SubscribeForm } from '@/components/forms/SubscribeForm';
 
 
 const WeatherPage = () => {
@@ -73,14 +73,14 @@ const WeatherPage = () => {
       )}
 
 
-    <Box >
+    {/* <Box >
     <ForecastWeather />
       </Box>
 
       <Box >
     <SubscribeForm />
       </Box>
-
+      </VStack> */}
     </Flex>
     
     
