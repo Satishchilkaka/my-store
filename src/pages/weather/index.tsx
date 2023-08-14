@@ -5,6 +5,7 @@ import { ForecastWeather } from '@/components/forecastWeather/forecastWeather';
 import { WeatherData } from '@/types/weatherData';
 
 import cityData from '../../assets/cityNames.json'
+import {  SubscribeForm } from '@/components/forms/subscribeForm';
 
 
 const WeatherPage = () => {
@@ -26,7 +27,7 @@ const WeatherPage = () => {
 
   console.log('selectedCity',selectedCity)
   return (
-    <><Flex alignContent={'center'} ml={'25px'} mt={'30px'}>
+    <Flex alignContent={'center'} ml={'25px'} mt={'30px'}>
 
       <Box>
         <Heading mb={5}>Current Weather</Heading>
@@ -35,14 +36,13 @@ const WeatherPage = () => {
           <select
             name='cityName'
             placeholder='Select city'
-          style= {{
-            borderRadius: '10px',
-            width: '70%',
-            minHeight: '40px',
-            
-          }}
-            
-            
+            style={{
+              borderRadius: '10px',
+              width: '70%',
+              minHeight: '40px',
+            }}
+
+
             value={selectedCity}
             onChange={(e) => setSelectedCity(e.target.value)}
           >
@@ -60,7 +60,7 @@ const WeatherPage = () => {
         </Box>
       </Box>
 
-      
+
       {weatherData && (
         <Box mt={5} ml={5}>
           <Heading as="h2" size="md">
@@ -71,8 +71,22 @@ const WeatherPage = () => {
           <Text fontSize="md">Local time: {weatherData.location.localtime}</Text>
         </Box>
       )}
-    </Flex><ForecastWeather /></>
-   
+
+
+    <Box >
+    <ForecastWeather />
+      </Box>
+
+      <Box >
+    <SubscribeForm />
+      </Box>
+
+    </Flex>
+    
+    
+    
+    
+    
   );
 };
 
