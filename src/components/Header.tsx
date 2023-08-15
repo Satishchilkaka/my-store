@@ -1,6 +1,24 @@
 import { useState } from 'react';
-import { Flex, Switch, useColorMode } from '@chakra-ui/react';
+import { Box, Flex, Switch, useColorMode , Text} from '@chakra-ui/react';
 import {WeatherNavigation} from '@/components/WeatherNavigation';
+
+
+
+export const ThemeSwitch = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  return (
+    <Box>
+      <Box>
+        <Text textTransform={'uppercase'}> Dark Mode</Text>
+      </Box>
+      <Box>
+        <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
+      </Box>
+    </Box>
+  )
+}
+
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,11 +35,13 @@ export const Header = () => {
       align="center"
       justify="space-between"
       p={4}
-      bg={isDarkMode ? '#2C4377' : '#666666'}
+    // bg={isDarkMode ? '#2C4377' : '#666666'}
     >
+      
     <WeatherNavigation/>
     <h1>Weather </h1>
-      <Switch isChecked={isDarkMode} onChange={handleToggle}  />
+    <ThemeSwitch/>
+      
     </Flex>
   );
 };
