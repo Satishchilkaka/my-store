@@ -1,49 +1,29 @@
-import { useState } from 'react';
-import { Box, Flex, Switch, useColorMode , Text} from '@chakra-ui/react';
-import {WeatherNavigation} from '@/components/WeatherNavigation';
-
-
-
-export const ThemeSwitch = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  return (
-    <Box>
-      <Box>
-        <Text textTransform={'uppercase'}> Dark Mode</Text>
-      </Box>
-      <Box>
-        <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
-      </Box>
-    </Box>
-  )
-}
-
+import { Box, Flex, Switch, useColorMode, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { WeatherNavigation } from "./WeatherNavigation";
 
 export const Header = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const { toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
+  // const [isDarkMode, setIsDarkMode] = useState(colorMode === "dark");
 
-  const handleToggle = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-    toggleColorMode();
-  };
+  // useEffect(() => {
+  //   setIsDarkMode(colorMode === "dark");
+  // }, [colorMode]);
 
   return (
-    <Flex
-      as="header"
-      align="center"
-      justify="space-between"
-      p={4}
-    // bg={isDarkMode ? '#2C4377' : '#666666'}
-    >
-      
-    <WeatherNavigation/>
-    <h1>Weather </h1>
-    <ThemeSwitch/>
-      
-    </Flex>
+
+
+
+      <><Box>
+      <WeatherNavigation />
+    </Box>
+    <Flex justify="flex-end">
+        <Box textAlign={'center'}  display={'flex'} alignItems={'center'}>
+
+
+
+          <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
+        </Box>
+      </Flex></>
   );
 };
-
-

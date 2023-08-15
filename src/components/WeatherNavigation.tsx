@@ -1,27 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
 import { Box, Flex, HStack, Text } from '@chakra-ui/react';
-
+import NextLink from "next/link";
 export const WeatherNavigation = () => {
   return (
     <Flex>
       <HStack>
-        <Box>
-
-      
-      <Link href="/current">
-      
-          <Text
-            display="block"
-            color="gray.600"
-            _hover={{ color: 'blue.500' }}
-            p={2}
-          >
-            Current Weather
-          </Text>
-      
-      </Link>
-      </Box>
+      <Box>
+      <NextLink href="/current">
+        <Box
+          as="a"
+          display="block"
+          px={4}
+          py={2}
+          rounded="md"
+       
+          _hover={{ color: "blue.500"}}
+        >
+          <Text>Current Weather</Text>
+        </Box>
+      </NextLink>
+    </Box>
      
       <Box>
 
@@ -30,7 +29,7 @@ export const WeatherNavigation = () => {
       
           <Text
             display="block"
-            color="gray.600"
+          
             _hover={{ color: 'blue.500' }}
             p={2}
           >

@@ -1,22 +1,16 @@
 import { NextPage } from 'next';
 import { ChakraProvider, Box } from '@chakra-ui/react';
-import {Header} from '@/components/Header';
-import Weather from './current';
-import Footer from '@/components/Footer';
-import Head from 'next/head';
+import {Header} from '../components/Header';
 
 const Home: NextPage = () => {
   return (
-   <>
-   
-    <Head>
-      <title>Weather status</title>
-    </Head>
-    <main>
-      <Header/>
-    </main>
-   
-   </>
+    <ChakraProvider>
+      <Box>
+        <Header />
+     
+       
+      </Box>
+    </ChakraProvider>
   );
 };
 
