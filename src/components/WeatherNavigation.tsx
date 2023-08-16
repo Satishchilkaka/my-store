@@ -1,46 +1,45 @@
 import React from 'react';
-import Link from 'next/link';
-import { Box, Flex, HStack, Text } from '@chakra-ui/react';
-import NextLink from "next/link";
-export const WeatherNavigation = () => {
-  return (
-    <Flex>
-      <HStack>
-      <Box>
-      <NextLink href="/current">
-        <Box
-          as="a"
-          display="block"
-          px={4}
-          py={2}
-          rounded="md"
-       
-          _hover={{ color: "blue.500"}}
-        >
-          <Text>Current Weather</Text>
-        </Box>
-      </NextLink>
-    </Box>
-     
-      <Box>
+import { Flex, IconButton, Text } from '@chakra-ui/react';
+import { WiCloud, WiTime1 } from 'react-icons/wi';
+import { useRouter } from 'next/router';
 
-    
-      <Link href="/forecast">
-      
-          <Text
-            display="block"
-          
-            _hover={{ color: 'blue.500' }}
-            p={2}
-          >
-            Forecast Weather
-          </Text>
-      
-      </Link>
-      </Box>
-      </HStack>
+export const WeatherNavigation = () => {
+  const router = useRouter();
+
+  const navigateTo = (path: string) => {
+    router.push(path);
+  };
+
+  const paths = [
+    {
+      label: 'Current Weather',
+      path: '/current',
+      icon: WiCloud,
+    },
+    {
+      label: 'Forecast Weather',
+      path: '/forecast',
+      icon: WiTime1,
+    }
+  ];
+
+  return (
+    <Flex h="100%">
+      <Flex alignItems="center" display="flex" h={50} cursor="pointer" >
+        {paths.map((item, index) => (
+          <Flex alignItems="center" key={index} onClick={() => navigateTo(item.path)}>
+            <IconButton aria-label={item.label} icon={<item.icon size={20} />} />
+            <Text
+              fontSize="20px"
+              ml={1}
+              mr={3}
+              onClick={() => navigateTo(item.path)} 
+            >
+              {item.label}
+            </Text>
+          </Flex>
+        ))}
+      </Flex>
     </Flex>
   );
 };
-
-
