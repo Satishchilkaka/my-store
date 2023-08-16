@@ -24,10 +24,11 @@ export const WeatherNavigation = () => {
   ];
 
   return (
-    <Flex h="100%">
-      <Flex alignItems="center" display="flex" h={50} cursor="pointer" >
+    <Flex h="100%" bgColor={'gray'}>
+      <Flex alignItems="center" display="flex" h={50} cursor="pointer"
+       >
         {paths.map((item, index) => (
-          <Flex alignItems="center" key={index} onClick={() => navigateTo(item.path)}>
+          <Flex alignItems="center" bgColor={'gray.600'} rounded={'md'} ml={3} key={index} onClick={() => navigateTo(item.path)}>
             <IconButton aria-label={item.label} icon={<item.icon size={20} />} />
             <Text
               fontSize="20px"
