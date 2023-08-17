@@ -6,9 +6,10 @@ import { WeatherData } from '@/types/weatherData';
 
 import cityData from '../../assets/cityNames.json'
 import {  SubscribeForm } from '@/components/forms/SubscribeForm';
+import {Layout} from '@/components/Layout';
 
 
-const WeatherPage = () => {
+const WeatherPage: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   const [selectedCity, setSelectedCity] = useState<string>('Select');
@@ -27,6 +28,7 @@ const WeatherPage = () => {
 
   console.log('selectedCity',selectedCity)
   return (
+    <Layout>
     <Flex alignContent={'center'} ml={'25px'} mt={'30px'}>
 
       <Box>
@@ -83,7 +85,7 @@ const WeatherPage = () => {
       </VStack> */}
     </Flex>
     
-    
+    </Layout>
     
     
     

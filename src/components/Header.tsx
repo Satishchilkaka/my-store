@@ -14,16 +14,20 @@ export const Header = () => {
 
 
 
-      <><Box>
-      <WeatherNavigation />
-    </Box>
-    <Flex justify="flex-end">
+     <Flex>
+      <Box justifyContent={'end'}>
+      {/* <WeatherNavigation /> */}
+      </Box>
+      
+   
+    <Flex >
         <Box textAlign={'center'}  display={'flex'} alignItems={'center'}>
 
 
 
           <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
         </Box>
-      </Flex></>
+        </Flex>
+      </Flex>
   );
 };

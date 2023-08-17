@@ -1,14 +1,22 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import React, { ReactNode } from 'react';
+import { WeatherNavigation } from './WeatherNavigation';
+import Head from 'next/head';
 
-
-const Layout = () => {
-  return (
-    <ChakraProvider>
-   
-    
-      {/* You can include other common layout elements here */}
-    </ChakraProvider>
-  );
+type PageProps = {
+  children: ReactNode;
 };
 
-export default Layout;
+export const Layout = ({ children }: PageProps) => {
+  return (
+    <>
+      <Head>
+        <title>Weather</title>
+      </Head>
+      <div>
+   
+        <WeatherNavigation />
+        {children}
+      </div>
+    </>
+  );
+};

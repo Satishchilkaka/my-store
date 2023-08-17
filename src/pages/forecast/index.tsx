@@ -1,3 +1,4 @@
+import { Layout } from "@/components/Layout";
 import { ForecastWeatherData } from "@/types/weatherData";
 import { getForecastWeather } from "@/util/currentWeather";
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
@@ -20,6 +21,7 @@ const ForecastWeather = () => {
   };
 
   return (
+    <Layout>
     <Flex ml={"25px"} mt={"70px"}>
       <Box>
         <Heading mb={5}>Forecast 1 day Weather</Heading>
@@ -63,6 +65,7 @@ const ForecastWeather = () => {
         )}
     
     </Flex>
+    </Layout>
   );
 };
 
