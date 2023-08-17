@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { WiCloud, WiTime1 } from 'react-icons/wi';
 import { useRouter } from 'next/router';
-import { Header } from '@/components/Header';
 
 export const WeatherNavigation = () => {
   const router = useRouter();
@@ -42,9 +41,7 @@ export const WeatherNavigation = () => {
           </Flex>
         ))}
       </Flex>
-      <Box justifyContent={'flex-end'}>
-      <Header /> 
-      </Box>
+    
      
     </Flex>
   );

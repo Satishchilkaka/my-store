@@ -1,5 +1,5 @@
 import { Box, Flex, Switch, useColorMode, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+
 import { WeatherNavigation } from "./WeatherNavigation";
 
 export const Header = () => {
@@ -22,9 +22,6 @@ export const Header = () => {
    
     <Flex >
         <Box textAlign={'center'}  display={'flex'} alignItems={'center'}>
-
-
-
           <Switch isChecked={colorMode === 'dark'} onChange={toggleColorMode} />
         </Box>
         </Flex>
