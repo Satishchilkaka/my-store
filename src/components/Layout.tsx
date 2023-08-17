@@ -10,12 +10,10 @@ type PageProps = {
 export const Layout = ({ children }: PageProps) => {
   return (
     <>
-      <Head>
-        <title>Weather</title>
-      </Head>
+    
       <div>
       <Header /> 
-        <WeatherNavigation />
+   
         {children}
       </div>
     </>
