@@ -3,16 +3,18 @@ import { ChakraProvider, Box } from '@chakra-ui/react';
 import { Layout } from '@/components/Layout'; // Import Layout component
 import { Header } from '../components/Header';
 
-const Home: NextPage = () => {
+// pages/index.tsx (Home page)
+import React from 'react';
+
+const Home: React.FC = () => {
   return (
+
     <ChakraProvider>
-      <Layout> 
-        {/* Content of the Home page */}
-        <Box>
-          {/* page content */}
-        </Box>
-      </Layout>
-    </ChakraProvider>
+    <Layout>
+      <h2>Home Page</h2>
+    </Layout>
+  </ChakraProvider>
+    
   );
 };
 

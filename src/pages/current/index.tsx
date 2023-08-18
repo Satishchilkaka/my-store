@@ -103,7 +103,7 @@ import { WeatherData } from '@/types/weatherData';
 import cityData from '../../assets/cityNames.json';
 import { Layout } from '@/components/Layout';
 
-const WeatherPage: React.FC = () => {
+const Current: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>('Select');
 
@@ -117,12 +117,11 @@ const WeatherPage: React.FC = () => {
     return selectedCity !== '';
   };
 
-  console.log('selectedCity', selectedCity);
   return (
     <Layout>
-      <Flex align="center" ml="25px" mt="30px">
-        {/* Your WeatherPage content */}
-        <Flex direction="column" flex="1">
+     <h2> current page</h2>
+      <Flex ml="25px" mt="30px">
+        <Box flex="1">
           <Heading mb={5}>Current Weather</Heading>
           <FormControl>
             <label>Select a city name:</label>
@@ -153,11 +152,12 @@ const WeatherPage: React.FC = () => {
               Get Weather Data
             </Button>
           </Box>
-          {/* Display weather data here */}
-        </Flex>
-      </Flex>
+        
+       </Box>
+      </Flex> 
     </Layout>
   );
 };
 
-export default WeatherPage;
+export default Current;
+
