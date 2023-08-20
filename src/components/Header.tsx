@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { useRouter } from "next/router";
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes } from "react-icons/fa";
 
 type NavigationItem = {
   label: string;
@@ -60,69 +60,92 @@ export const Header: React.FC = () => {
   const [isMobile] = useMediaQuery("(max-width: 600px)");
 
   return (
-    <Flex justifyContent="space-between" alignItems="center" p={4} bg="#CCCCCC" minHeight={70}>
-    {isMobile ? (
-      <>
-        <IconButton
-          aria-label="Toggle Theme"
-          icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
-          onClick={toggleColorMode}
-        />
-       <IconButton
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      p={4}
+      bg="#CCCCCC"
+      display={"flex"}
+      maxHeight={40}
+    >
+      {isMobile ? (
+        <>
+          <IconButton 
+            aria-label="Toggle Theme"
+            icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
+            onClick={toggleColorMode}
+          />
+          <IconButton
+          
             aria-label="Open Navigation"
+            
             icon={
-              <Box w={5} h={4} display="flex" flexDirection="column" justifyContent="space-between">
+              <Box
+                w={5}
+                h={4}
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+              >
                 <Box h={1} bgColor="white"></Box>
                 <Box h={1} bgColor="white"></Box>
                 <Box h={1} bgColor="white"></Box>
               </Box>
             }
             onClick={() => setIsDrawerOpen(true)}
-            bgColor={'#999999'}
+            bgColor={"#999999"}
             _hover={{ bg: "#292929", color: "white" }}
-
           />
-        <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} placement="right">
-          <DrawerOverlay>
-            <DrawerContent>
-              <DrawerHeader display="flex" justifyContent="space-between" alignItems="center">
-                Navigation
-                <IconButton
-  aria-label="Close Navigation"
-  icon={<FaTimes />}
-  onClick={() => setIsDrawerOpen(false)}
-/>
-              </DrawerHeader>
-              <DrawerBody>
-              <VStack align="stretch">
-  {paths.map((item) => (
-    <Button
-      key={item.path}
-      fontSize={["sm", "md"]} 
-      size={["sm", "md"]} 
-      onClick={() => handlePathChange(item.path)}
-      color={item.path === router.pathname ? "black" : "inherit"}
-      _hover={{ bg: "#292929", color: "white" }}
-      _dark={{
-        bg: "#999999",
-        _hover: {
-          bg: "#000000",
-        },
-      }}
-      bg={currentPath === item.path ? "#666666" : "grey"}
-      display="flex"
-    >
-      {item.label}
-    </Button>
-  ))}
-</VStack>
-
-              </DrawerBody>
-            </DrawerContent>
-          </DrawerOverlay>
-        </Drawer>
-      </>
-    )  : (
+          <Drawer
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            placement={isMobile ? "left" : "right"}
+          >
+            <DrawerOverlay>
+              <DrawerContent>
+                <DrawerHeader
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  Navigation
+                  <IconButton
+                    aria-label="Close Navigation"
+                    icon={<FaTimes />}
+                    onClick={() => setIsDrawerOpen(false)}
+                  />
+                </DrawerHeader>
+                <DrawerBody>
+                  <VStack align="stretch">
+                    {paths.map((item) => (
+                      <Button
+                        key={item.path}
+                        fontSize={["sm", "md"]}
+                        size={["sm", "md"]}
+                        onClick={() => handlePathChange(item.path)}
+                        color={
+                          item.path === router.pathname ? "black" : "inherit"
+                        }
+                        _hover={{ bg: "#292929", color: "white" }}
+                        _dark={{
+                          bg: "#999999",
+                          _hover: {
+                            bg: "#000000",
+                          },
+                        }}
+                        bg={currentPath === item.path ? "#666666" : "grey"}
+                        display="flex"
+                      >
+                        {item.label}
+                      </Button>
+                    ))}
+                  </VStack>
+                </DrawerBody>
+              </DrawerContent>
+            </DrawerOverlay>
+          </Drawer>
+        </>
+      ) : (
         <Flex alignItems="end" gap={1}>
           {paths.map((item) => (
             <Box
