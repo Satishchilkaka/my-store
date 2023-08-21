@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
     justifyContent="space-between"
     alignItems="center"
     p={4}
-    bg={colorMode === "dark" ? "#999999" : "#CCCCCC"} // Adjust background color based on color mode
+    bg={colorMode === "dark" ? "#999999" : "#CCCCCC"} 
     display="flex"
     maxHeight="45px"
   >
@@ -136,7 +136,7 @@ export const Header: React.FC = () => {
         fontSize="sm"
         onClick={() => handlePathChange(item.path)}
         color={item.path === router.pathname ? "white" : "inherit"} 
-        bg={item.path === router.pathname ? "#292929" : "transparent"} // Highlight when selected
+        bg={item.path === router.pathname ? "#292929" : "transparent"} 
         cursor="pointer"
         _hover={{ bg: "#999999", color: "#000000" }}
       

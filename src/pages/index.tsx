@@ -3,16 +3,19 @@ import { ChakraProvider, Box } from '@chakra-ui/react';
 import { Layout } from '@/components/Layout'; // Import Layout component
 import { Header } from '../components/Header';
 
-// pages/index.tsx (Home page)
 import React from 'react';
+import { SignInPage } from './SignInPage';
 
 const Home: React.FC = () => {
   return (
 
     <ChakraProvider>
-    <Layout>
+    {/* <Layout>
       <h2>Home Page</h2>
-    </Layout>
+    </Layout> */}
+    <div className="App">
+        <SignInPage />
+      </div>
   </ChakraProvider>
     
   );
