@@ -35,7 +35,7 @@ type PageProps = {
 export const Layout: React.FC<PageProps> = ({ children }) => {
   return (
     <ChakraProvider theme={theme}>
-      <CSSReset />
+
       <Flex flexDirection="column" minHeight="100vh">
         <Header />
         <Box flex="1" p={4}>

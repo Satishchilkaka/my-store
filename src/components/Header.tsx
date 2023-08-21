@@ -17,18 +17,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Select,
 } from "@chakra-ui/react";
-import { BsChevronCompactDown } from "react-icons/bs";
-import { FiSun, FiMoon } from "react-icons/fi";
-import { GiHamburgerMenu } from "react-icons/gi";
+
 import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { NavigationItem } from '../types/navigationItems'; 
 
-type NavigationItem = {
-  label: string;
-  path: string;
-};
-
+import {ProfileMenu} from '@/components/ProfileMenu'
 const paths: NavigationItem[] = [
   {
     label: "Home",
@@ -45,7 +41,6 @@ const paths: NavigationItem[] = [
 ];
 
 export const Header: React.FC = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -71,7 +66,7 @@ export const Header: React.FC = () => {
       p={4}
       bg="#CCCCCC"
       display={"flex"}
-      maxHeight={40}
+   
     >
       {isMobile ? (
         <>
@@ -130,11 +125,7 @@ export const Header: React.FC = () => {
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
-          <IconButton
-            aria-label="Toggle Theme"
-            icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
-            onClick={toggleColorMode}
-          />
+        
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
@@ -157,6 +148,7 @@ export const Header: React.FC = () => {
               mr={1}
               p={2}
               rounded="md"
+              minHeight="40px"
             >
               <Text fontSize="20px" textTransform="uppercase">
                 {item.label}
@@ -165,25 +157,14 @@ export const Header: React.FC = () => {
           ))}
      
 
-<Menu>
-  <MenuButton
-    as={IconButton}
-    aria-label='Options'
-    icon={<GiHamburgerMenu />}
-    variant='outline'
-  />
-  <MenuList>
-  <IconButton
-            aria-label="Toggle Theme"
-            icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
-            onClick={toggleColorMode}
-          />
-  </MenuList>
-</Menu>
 
 
         </Flex>
       )}
+      
+      <ProfileMenu/>
+     
     </Flex>
+    
   );
 };
