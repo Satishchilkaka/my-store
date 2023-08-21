@@ -58,16 +58,17 @@ export const Header: React.FC = () => {
   };
 
   const [isMobile] = useMediaQuery("(max-width: 600px)");
+  const { colorMode } = useColorMode();
 
   return (
     <Flex
-      justifyContent="space-between"
-      alignItems="center"
-      p={4}
-      bg="#CCCCCC"
-      display={"flex"}
-   
-    >
+    justifyContent="space-between"
+    alignItems="center"
+    p={4}
+    bg={colorMode === "dark" ? "#999999" : "#CCCCCC"} // Adjust background color based on color mode
+    display="flex"
+    maxHeight="45px"
+  >
       {isMobile ? (
         <>
           <IconButton
@@ -129,32 +130,28 @@ export const Header: React.FC = () => {
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
-          {paths.map((item) => (
-            <Box
-              key={item.path}
-              fontSize="md"
-              onClick={() => handlePathChange(item.path)}
-              color={item.path === router.pathname ? "black" : "inherit"}
-              cursor="pointer"
-              _hover={{ bg: "#292929", color: "white" }}
-              _dark={{
-                bg: "#999999",
-                _hover: {
-                  bg: "#000000",
-                },
-              }}
-              bg={currentPath === item.path ? "#666666" : "grey"}
-              ml={1}
-              mr={1}
-              p={2}
-              rounded="md"
-              minHeight="40px"
-            >
-              <Text fontSize="20px" textTransform="uppercase">
-                {item.label}
-              </Text>
-            </Box>
-          ))}
+         {paths.map((item) => (
+      <Box
+        key={item.path}
+        fontSize="sm"
+        onClick={() => handlePathChange(item.path)}
+        color={item.path === router.pathname ? "white" : "inherit"} 
+        bg={item.path === router.pathname ? "#292929" : "transparent"} // Highlight when selected
+        cursor="pointer"
+        _hover={{ bg: "#999999", color: "#000000" }}
+      
+        ml={1}
+        mr={1}
+        p={2}
+        rounded="md"
+      >
+        <Text fontSize="15px" textTransform="uppercase"
+        color={item.path === router.pathname ? "white" : "#000000"} 
+        >
+          {item.label}
+        </Text>
+      </Box>
+    ))}
      
 
 
