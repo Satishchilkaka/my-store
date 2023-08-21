@@ -3,21 +3,26 @@ import {
   Flex,
   IconButton,
   useColorMode,
+  Box,
   Text,
-  Link as ChakraLink,
   useMediaQuery,
   Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
   Button,
   VStack,
-  Box,
+  DrawerBody,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerHeader,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
+import { BsChevronCompactDown } from "react-icons/bs";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { useRouter } from "next/router";
-import { FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 type NavigationItem = {
   label: string;
@@ -70,28 +75,9 @@ export const Header: React.FC = () => {
     >
       {isMobile ? (
         <>
-          <IconButton 
-            aria-label="Toggle Theme"
-            icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
-            onClick={toggleColorMode}
-          />
           <IconButton
-          
             aria-label="Open Navigation"
-            
-            icon={
-              <Box
-                w={5}
-                h={4}
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-              >
-                <Box h={1} bgColor="white"></Box>
-                <Box h={1} bgColor="white"></Box>
-                <Box h={1} bgColor="white"></Box>
-              </Box>
-            }
+            icon={<FaBars />}
             onClick={() => setIsDrawerOpen(true)}
             bgColor={"#999999"}
             _hover={{ bg: "#292929", color: "white" }}
@@ -99,7 +85,7 @@ export const Header: React.FC = () => {
           <Drawer
             isOpen={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
-            placement={isMobile ? "left" : "right"}
+            placement="left"
           >
             <DrawerOverlay>
               <DrawerContent>
@@ -144,6 +130,11 @@ export const Header: React.FC = () => {
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
+          <IconButton
+            aria-label="Toggle Theme"
+            icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
+            onClick={toggleColorMode}
+          />
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
@@ -172,11 +163,25 @@ export const Header: React.FC = () => {
               </Text>
             </Box>
           ))}
-          <IconButton
+     
+
+<Menu>
+  <MenuButton
+    as={IconButton}
+    aria-label='Options'
+    icon={<GiHamburgerMenu />}
+    variant='outline'
+  />
+  <MenuList>
+  <IconButton
             aria-label="Toggle Theme"
             icon={colorMode === "dark" ? <FiSun /> : <FiMoon />}
             onClick={toggleColorMode}
           />
+  </MenuList>
+</Menu>
+
+
         </Flex>
       )}
     </Flex>
