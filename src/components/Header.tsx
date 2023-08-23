@@ -26,10 +26,7 @@ import { NavigationItem } from '../types/navigationItems';
 
 import {ProfileMenu} from '@/components/ProfileMenu'
 const paths: NavigationItem[] = [
-  {
-    label: "Home",
-    path: "/",
-  },
+
   {
     label: "Current Weather",
     path: "/current",

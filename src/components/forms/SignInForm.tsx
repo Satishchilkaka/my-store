@@ -1,45 +1,60 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { FormControl, FormLabel, Input, Button, Alert, AlertIcon } from '@chakra-ui/react';
 import axios from 'axios';
+import { useRouter } from 'next/router'; // Import the useRouter hook
 
-
-//  const clientAPI = () => {
-//     const instance = axios.create({
-//         baseUrl: 'http://localhost:3001'
-
-//     })
-
-// }
-
-export const SignInForm: React.FC = () => {
+export const SignInForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter(); // Initialize the useRouter hook
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/login', { username, password });
-      console.log(response.data.message); 
+      const response = await axios.post('http://localhost:3001/v1/login', {
+        username,
+        password,
+      });
+
+      console.log(response.data.message);
+      setErrorMessage('');
+
+      // Redirect to the home page on successful login
+      router.push('/current'); // Replace '/home' with the actual route of your home page
     } catch (error) {
-      console.error('Error:', error);
+      setErrorMessage('Invalid credentials');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Sign In</button>
+      <FormControl>
+        <FormLabel>Username</FormLabel>
+        <Input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel>Password</FormLabel>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </FormControl>
+      <Button type="submit" mt={4}>
+        Login
+      </Button>
+      {errorMessage && (
+        <Alert status="error" mt={4}>
+          <AlertIcon />
+          {errorMessage}
+        </Alert>
+      )}
     </form>
   );
 };
