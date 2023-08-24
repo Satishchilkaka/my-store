@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { FormControl, FormLabel, Input, Button, Alert, AlertIcon } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useRouter } from 'next/router'; // Import the useRouter hook
 
@@ -20,9 +27,11 @@ export const SignInForm = () => {
 
       console.log(response.data.message);
       setErrorMessage('');
+      const token = response.data.token;
+      localStorage.setItem('token', token);
 
-      // Redirect to the home page on successful login
-      router.push('/current'); // Replace '/home' with the actual route of your home page
+console.log('get token and set token', token);
+      router.push('/current'); 
     } catch (error) {
       setErrorMessage('Invalid credentials');
     }
@@ -58,5 +67,3 @@ export const SignInForm = () => {
     </form>
   );
 };
-
-

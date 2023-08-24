@@ -25,6 +25,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { NavigationItem } from '../types/navigationItems'; 
 
 import {ProfileMenu} from '@/components/ProfileMenu'
+import { AuthProvider } from '../pages/api/auth'
 const paths: NavigationItem[] = [
 
   {
@@ -155,8 +156,9 @@ export const Header: React.FC = () => {
 
         </Flex>
       )}
-      
+       <AuthProvider>
       <ProfileMenu/>
+      </AuthProvider>
      
     </Flex>
     
