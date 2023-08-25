@@ -16,6 +16,9 @@ import { useAuth } from '@/pages/useAuth';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
+import { MdPerson } from 'react-icons/md';
+
+
 export const ProfileMenu = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const uniqueId = 'user-profile-menu';
@@ -50,7 +53,7 @@ export const ProfileMenu = () => {
         <MenuItem>
           <Flex alignItems="center">
           <Avatar size="sm" src={auth.user?.avatarUrl} />
-            <Text ml={2}>{username}</Text> {/* Display the extracted username */}
+           <Text ml={2}>{username}</Text>     {/*Display user name from token */}
           </Flex>
         </MenuItem>
         

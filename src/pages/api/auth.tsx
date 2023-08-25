@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
+  user: { avatarUrl: string | undefined; }
   token: string | null;
   logout: () => void;
+
 }
 
 interface ChildrenAuthContextType { 
@@ -30,6 +32,10 @@ export const AuthProvider: React.FC <ChildrenAuthContextType> = ({ children }) =
   const authContextValue: AuthContextType = {
     token,
     logout,
+    user: {
+      avatarUrl: undefined
+    },
+    
   };
 
   return (

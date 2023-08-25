@@ -5,10 +5,16 @@ import React, { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading , Text} from '@chakra-ui/react';
 import { WeatherData } from '@/types/weatherData';
+import { parse } from 'cookie';
 
 import cityData from '../../assets/cityNames.json';
 import { Layout } from '@/components/Layout';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import withSession from '@/util/withSession';
+interface ProfileProps {
+  token: string; 
+}
 
 const Current: React.FC = () => {
   const router = useRouter();
@@ -100,3 +106,14 @@ const Current: React.FC = () => {
 
 export default Current;
 
+
+// export const getServerSideProps: GetServerSideProps<ProfileProps> = withSession(
+//   async function (context) {
+//     const cookies = parse(context.req.headers.cookie || '');
+//     const token = cookies.token || '';
+
+//     return {
+//       props: { token },
+//     };
+//   }
+// );
