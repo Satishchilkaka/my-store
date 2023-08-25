@@ -13,21 +13,15 @@ import {
   DrawerContent,
   DrawerOverlay,
   DrawerHeader,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Select,
 } from "@chakra-ui/react";
-
+import { observer } from 'mobx-react-lite';
 import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavigationItem } from '../types/navigationItems'; 
+import { NavigationItem } from '../types/navigationItems';
+import { ProfileMenu } from '@/components/ProfileMenu';
+import { AuthProvider } from '../pages/api/auth';
 
-import {ProfileMenu} from '@/components/ProfileMenu'
-import { AuthProvider } from '../pages/api/auth'
 const paths: NavigationItem[] = [
-
   {
     label: "Current Weather",
     path: "/current",
@@ -38,15 +32,15 @@ const paths: NavigationItem[] = [
   },
 ];
 
-export const Header: React.FC = () => {
+interface Props {
+  withNoMenus?: boolean;
+}
+
+export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
   const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const getSelectedPath = () => {
-    const route = router.pathname;
-    return route;
-  };
-  const currentPath = getSelectedPath();
+  const [isMobile] = useMediaQuery("(max-width: 600px)");
+  const { colorMode } = useColorMode();
 
   const handlePathChange = (path: string) => {
     if (path !== router.pathname) {
@@ -55,18 +49,15 @@ export const Header: React.FC = () => {
     }
   };
 
-  const [isMobile] = useMediaQuery("(max-width: 600px)");
-  const { colorMode } = useColorMode();
-
   return (
     <Flex
-    justifyContent="space-between"
-    alignItems="center"
-    p={4}
-    bg={colorMode === "dark" ? "#999999" : "#CCCCCC"} 
-    display="flex"
-    maxHeight="45px"
-  >
+      justifyContent="space-between"
+      alignItems="center"
+      p={4}
+      bg={colorMode === "dark" ? "#999999" : "#CCCCCC"}
+      display="flex"
+      maxHeight="45px"
+    >
       {isMobile ? (
         <>
           <IconButton
@@ -113,7 +104,7 @@ export const Header: React.FC = () => {
                             bg: "#000000",
                           },
                         }}
-                        bg={currentPath === item.path ? "#666666" : "grey"}
+                        bg={router.pathname === item.path ? "#666666" : "grey"}
                         display="flex"
                       >
                         {item.label}
@@ -124,43 +115,38 @@ export const Header: React.FC = () => {
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
-        
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
-         {paths.map((item) => (
-      <Box
-        key={item.path}
-        fontSize="sm"
-        onClick={() => handlePathChange(item.path)}
-        color={item.path === router.pathname ? "white" : "inherit"} 
-        bg={item.path === router.pathname ? "#292929" : "transparent"} 
-        cursor="pointer"
-        _hover={{ bg: "#999999", color: "#000000" }}
-      
-        ml={1}
-        mr={1}
-        p={2}
-        rounded="md"
-      >
-        <Text fontSize="15px" textTransform="uppercase"
-        color={item.path === router.pathname ? "white" : "#000000"} 
-        >
-          {item.label}
-        </Text>
-      </Box>
-    ))}
-     
-
-
-
+          {paths.map((item) => (
+            <Box
+              key={item.path}
+              fontSize="sm"
+              onClick={() => handlePathChange(item.path)}
+              color={router.pathname === item.path ? "white" : "inherit"}
+              bg={router.pathname === item.path ? "#292929" : "transparent"}
+              cursor="pointer"
+              _hover={{ bg: "#999999", color: "#000000" }}
+              ml={1}
+              mr={1}
+              p={2}
+              rounded="md"
+            >
+              <Text
+                fontSize="15px"
+                textTransform="uppercase"
+                color={router.pathname === item.path ? "white" : "#000000"}
+              >
+                {item.label}
+              </Text>
+            </Box>
+          ))}
         </Flex>
       )}
-       <AuthProvider>
-      <ProfileMenu/>
+      <AuthProvider>
+        <ProfileMenu />
       </AuthProvider>
-     
     </Flex>
-    
   );
-};
+});
+

@@ -27,21 +27,50 @@
 import React, { ReactNode } from 'react';
 import { Header } from '@/components/Header';
 import { Box, ChakraProvider, CSSReset, Flex, theme } from '@chakra-ui/react';
+import Head from 'next/head';
 
 type PageProps = {
   children: ReactNode;
+  noHeader: boolean
+  withNoMenus: boolean
+  title: string
 };
 
-export const Layout: React.FC<PageProps> = ({ children }) => {
+export const Layout: React.FC<PageProps> = ({ children , noHeader, withNoMenus, title}) => {
   return (
-    <ChakraProvider theme={theme}>
+    <>
+    <Head>
+<title> {title}</title>
+<meta name='description' content=''/>
+<meta name='viewport' content='width=device-width, initial-scale=1' />
 
-      <Flex flexDirection="column" minHeight="100vh">
-        <Header />
-        <Box flex="1" p={4}>
-          {children}
-        </Box>
-      </Flex>
-    </ChakraProvider>
+    </Head>
+    <>
+    {!noHeader ? <Header withNoMenus={withNoMenus}/> : null}
+    <div
+    style={{
+      width: '100%',
+      maxWidth: '1800px',
+      margin: 'auto',
+      height: '100%',
+
+    }}
+    >
+      {children}
+    </div>
+    </>
+  </>
+    
   );
 };
+
+
+// <ChakraProvider theme={theme}>
+
+// <Flex flexDirection="column" minHeight="100vh">
+//   <Header />
+//   <Box flex="1" p={4}>
+//     {children}
+//   </Box>
+// </Flex>
+// </ChakraProvider>

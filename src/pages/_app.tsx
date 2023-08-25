@@ -1,20 +1,17 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from '../styles/theme';
 
-import { AppProps } from 'next/app'; 
+
 import { SessionProvider } from 'next-auth/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
-
-
-function MyApp({ Component, pageProps }: AppProps) {
+const App =  ({ Component, pageProps, session }: any)  =>{
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-    //    <SessionProvider session={pageProps.session}>
-    //    <Component {...pageProps} />
-    //  </SessionProvider>
+    <SessionProvider session={session} 
+    refetchInterval={60 * 13}>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </SessionProvider>
   );
 }
 
-export default MyApp;
+export default App;

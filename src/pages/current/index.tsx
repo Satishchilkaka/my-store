@@ -52,7 +52,7 @@ const Current: React.FC = () => {
 
 
   return (
-    <Layout>
+    <Layout title={'current page'} noHeader={false} withNoMenus={false} >
      <h2> current page</h2>
       <Flex ml="25px" mt="30px">
         <Box flex="1">

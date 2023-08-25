@@ -6,11 +6,21 @@ import {
   Button,
   Alert,
   AlertIcon,
+  Checkbox,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 
-import { useRouter } from 'next/router'; // Import the useRouter hook
+import { useRouter } from 'next/router'; 
+import { Formik, Field, Form, ErrorMessage } from "formik";
+
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required"),
+});
+
 
 export const SignInForm = () => {
   const [username, setUsername] = useState('');
@@ -38,35 +48,74 @@ console.log('get token and set token', token);
       setErrorMessage('Invalid credentials');
     }
   };
-
+const msg = 'Required'
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl>
-        <FormLabel>Username</FormLabel>
-        <Input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </FormControl>
-      <FormControl mt={4}>
-        <FormLabel>Password</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormControl>
-      <Button type="submit" mt={4}>
-        Login
-      </Button>
+    <FormControl mb={6}>
+      <FormLabel>Username</FormLabel>
+      <Input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
       {errorMessage && (
-        <Alert status="error" mt={4}>
+        <Alert status="error" fontSize="12px" bg="none">
           <AlertIcon />
           {errorMessage}
         </Alert>
       )}
-    </form>
+    </FormControl>
+    <FormControl mb={6} mt={5}>
+      <FormLabel>Password</FormLabel>
+      <Input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      {errorMessage && (
+        <Alert status="error" fontSize="12px" bg="none">
+          <AlertIcon />
+          {errorMessage}
+        </Alert>
+      )}
+    </FormControl>
+    <FormControl mb={4}>
+      <Checkbox name="rememberMe">Remember Me</Checkbox>
+    </FormControl>
+    <Button type="submit" size="lg">
+      Login
+    </Button>
+  </form>
+  
+
+    // <Formik
+    //   initialValues={{ username: "", password: "", rememberMe: false }}
+    //   validationSchema={validationSchema}
+    //   onSubmit={handleSubmit}
+    // >
+    //   <Form>
+    //     <FormControl>
+    //       <FormLabel>Username</FormLabel>
+    //       <Field as={Input} type="text" name="username" />
+    //       <ErrorMessage name="username">
+    //         {(msg: string) => <Alert status="error">{msg}</Alert>}
+    //       </ErrorMessage>
+    //     </FormControl>
+    //     <FormControl mt={4}>
+    //       <FormLabel>Password</FormLabel>
+    //       <Field as={Input} type="password" name="password" />
+    //       <ErrorMessage name="password">
+    //         {(msg: string) => <Alert status="error">{msg}</Alert>}
+    //       </ErrorMessage>
+    //     </FormControl>
+    //     <FormControl mt={16}>
+    //       <Checkbox name="rememberMe">Remember Me</Checkbox>
+    //     </FormControl>
+    //     <Button type="submit" mt={4}>
+    //       Login
+    //     </Button>
+    //   </Form>
+    // </Formik>
   );
 };
 

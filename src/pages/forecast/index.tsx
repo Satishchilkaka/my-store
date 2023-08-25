@@ -21,7 +21,7 @@ const ForecastWeather = () => {
   };
 
   return (
-    <Layout>
+    <Layout title="forecast" noHeader={false} withNoMenus={false}>
     <Flex ml={"25px"} mt={"70px"}>
       <Box>
         <Heading mb={5}>Forecast 1 day Weather</Heading>

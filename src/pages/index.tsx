@@ -1,24 +1,24 @@
-import { NextPage } from 'next';
-import { ChakraProvider, Box } from '@chakra-ui/react';
-import { Layout } from '@/components/Layout'; // Import Layout component
-import { Header } from '../components/Header';
 
-import React from 'react';
-import { SignInForm} from '@/components/forms/SignInForm';
 
-const Home: React.FC = () => {
+
+import { SessionProvider } from 'next-auth/react';
+import { ChakraProvider } from '@chakra-ui/react';
+import Head from 'next/head';
+import { Header } from '@/components/Header';
+import LoginPage from './login';
+
+const Home = () => {
+
   return (
-
-    <ChakraProvider>
-    {/* <Layout>
-      <h2>Home Page</h2>
-    </Layout> */}
-    <div className="App">
-        <SignInForm />
-      </div>
-  </ChakraProvider>
-    
-  );
-};
+    <>
+    <Head>
+    <title></title>
+  </Head>
+<main>
+<LoginPage/>
+</main>
+    </>
+  )
+}
 
 export default Home;

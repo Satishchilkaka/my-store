@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { SubscribeForm } from '@/components/forms/SubscribeForm';
 
-const Footer = () => {
+export const Footer = () => {
  
 
   return (
@@ -14,4 +14,3 @@ const Footer = () => {
   );
 };
 
-export default Footer;
