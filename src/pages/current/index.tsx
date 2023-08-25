@@ -1,17 +1,37 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading , Text} from '@chakra-ui/react';
 import { WeatherData } from '@/types/weatherData';
 
 import cityData from '../../assets/cityNames.json';
 import { Layout } from '@/components/Layout';
+import { useRouter } from 'next/router';
 
 const Current: React.FC = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>('Select');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/'); // Redirect to login page if token is not present
+    } else {
+      setIsLoading(false); 
+    }
+  }, []);
+
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+
+
 
   const handleGetWeather = () => {
     fetchWeatherData(selectedCity)
@@ -22,6 +42,8 @@ const Current: React.FC = () => {
   const isValidInput = () => {
     return selectedCity !== '';
   };
+
+
 
   return (
     <Layout>
