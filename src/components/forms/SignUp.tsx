@@ -10,7 +10,7 @@ import axios from 'axios';
 
 // }
 
-export const SignInForm: React.FC = () => {
+export const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
