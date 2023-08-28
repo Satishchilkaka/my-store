@@ -120,7 +120,7 @@ export const SignInForm = () => {
         </Box>
         <Box>
       <Link href="/signup"> {/* Replace "/signup" with the actual route to your signup page */}
-        <Button ml={15} display="flex">
+        <Button variant= {'primary'} ml={15} display="flex">
           Sign Up
         </Button>
       </Link>
