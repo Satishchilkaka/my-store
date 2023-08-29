@@ -3,23 +3,20 @@ import { ThemeComponents } from "@chakra-ui/react";
 export const components: ThemeComponents = {
     Button: {
         baseStyle: {
-            fonrWeight: 'normal',
+            fontWeight: 'normal',
         },
         variants: {
             primary: {
                 textTransform: 'uppercase',
                 fontWeight: 'normal',
                 letterSpacing: 'wide',
-                bg: '#2C3477',
-                color:'#CCCCCC',
+                bg: '#0D0D0D0D', // Reddish color
+                color: '#FFFFFF', // White text
                 _hover: {
-                    bg: '#2F5C98',
-
+                    bg: '#C53030', // Slightly darker on hover
                 },
                 _dark: {
-                    _hover: {
-                        bg:'#0D0D0D',
-                    }
+                    bg: '#9B2C2C', // Darker background for dark mode
                 }
             }
         }

@@ -103,7 +103,7 @@ export const SignInForm = () => {
         <Checkbox name="rememberMe">Remember Me</Checkbox>
       </FormControl>
 
-      <Button type="submit" size="lg" mt={3} mb={5} width="70%">
+      <Button type="submit"  variant= {'primary'}size="lg" mt={3} mb={5} width="70%">
         Sign In
       </Button>
 
