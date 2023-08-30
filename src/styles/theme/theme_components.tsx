@@ -16,7 +16,10 @@ export const components: ThemeComponents = {
                     bg: '#C53030', // Slightly darker on hover
                 },
                 _dark: {
-                    bg: '#9B2C2C', // Darker background for dark mode
+                    bg: '#2F5C98', // Darker background for dark mode,
+                    _hover: {
+                        bg: '#000000', // Slightly darker on hover
+                    },
                 }
             }
         }

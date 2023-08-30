@@ -18,7 +18,7 @@ const lightTheme = {
 const darkTheme = {
   colors: {
     ...colors,
-    background: '#121212', 
+    background: 'IAIAIA', 
     text: 'white', 
   },
 };
