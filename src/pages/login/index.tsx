@@ -30,7 +30,7 @@ alignItems={'center'}
 >
     <Box mt={105} display={'flex'}>
         
- <Heading fontSize={'2xl'}>
+ <Heading fontSize={'2xl'} mb={12}>
     SIGN IN
  </Heading>
       </Box>
