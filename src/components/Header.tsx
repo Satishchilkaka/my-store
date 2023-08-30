@@ -118,30 +118,41 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
-          {paths.map((item) => (
-            <Box
-              key={item.path}
-              fontSize="sm"
-              onClick={() => handlePathChange(item.path)}
+        {paths.map((item) => (
+          <Box
+            key={item.path}
+            fontSize="sm"
+            onClick={() => handlePathChange(item.path)}
+            color={router.pathname === item.path ? "white" : "inherit"}
+            bg={
+              colorMode === "dark"
+                ? router.pathname === item.path
+                  ? "#292929"
+                  : "#1A202C" // Dark mode background for all items
+                : router.pathname === item.path
+                ? "#2C3477"
+                : "#EDF2F7" // Light mode background for all items
+            }
+            cursor="pointer"
+            _hover={{
+              bg: colorMode === "dark" ? "#999999" : "#2F5C98",
+              color: colorMode === "dark" ? "#000000" : "#FFFFFF",
+            }}
+            ml={1}
+            mr={1}
+            p={2}
+            rounded="md"
+          >
+            <Text
+              fontSize="15px"
+              textTransform="uppercase"
               color={router.pathname === item.path ? "white" : "inherit"}
-              bg={router.pathname === item.path ? "#292929" : "transparent"}
-              cursor="pointer"
-              _hover={{ bg: "#999999", color: "#000000" }}
-              ml={1}
-              mr={1}
-              p={2}
-              rounded="md"
             >
-              <Text
-                fontSize="15px"
-                textTransform="uppercase"
-                color={router.pathname === item.path ? "white" : "#000000"}
-              >
-                {item.label}
-              </Text>
-            </Box>
-          ))}
-        </Flex>
+              {item.label}
+            </Text>
+          </Box>
+        ))}
+      </Flex>
       )}
       <AuthProvider>
         <ProfileMenu />
