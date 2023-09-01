@@ -2,13 +2,23 @@ import { Layout } from "@/components/Layout";
 import { ForecastWeatherData } from "@/types/weatherData";
 import { getForecastWeather } from "@/util/currentWeather";
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import router from "next/router";
+import { useEffect, useState } from "react";
 
 const ForecastWeather = () => {
   const [cityName, setCityName] = useState<string>("");
   const [forecastWeatherData, setForecastWeatherData] = useState<ForecastWeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/'); // Redirect to login page if token is not present
+    } else {
+      setIsLoading(false); 
+    }
+  }, []);
 
-
+  
   const isInputValid = () => {
     return cityName !== null && cityName !== '';
   };
