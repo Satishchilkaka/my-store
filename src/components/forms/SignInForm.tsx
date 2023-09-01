@@ -15,6 +15,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {RememberMeCheckbox} from '@/components/customComponents/RememberMeCheckbox'
 
 interface FormValues {
   username: string;
@@ -29,6 +30,8 @@ const validationSchema = Yup.object({
 export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const handleSubmit = async (values: FormValues) => {
     try {
@@ -100,7 +103,8 @@ export const SignInForm = () => {
       </FormControl>
 
       <FormControl mb={2}>
-        <Checkbox name="rememberMe">Remember Me</Checkbox>
+      <RememberMeCheckbox onToggle={setRememberMe} />
+        {/* <Checkbox name="rememberMe">Remember Me</Checkbox> */}
       </FormControl>
 
       <Button type="submit"  variant= {'primary'}size="lg" mt={3} mb={5} width="70%">
