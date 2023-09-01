@@ -124,12 +124,12 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
           const isDarkMode = colorMode === "dark";
           const backgroundColor =
             isCurrentPath && isDarkMode
-              ? "#666666"
+              ? "#333333"
               : isCurrentPath
-              ? "#666666"
+              ? "#0D0D0D"
               : isDarkMode
               ? "#0D0D0D"
-              : "#666666";
+              : "#333333";
           const hoverBackgroundColor =
             isDarkMode
               ? "#666666"
