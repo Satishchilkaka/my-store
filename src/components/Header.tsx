@@ -49,12 +49,13 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
     }
   };
 
+  
   return (
     <Flex
       justifyContent="space-between"
       alignItems="center"
       p={4}
-      bg={colorMode === "dark" ? "#999999" : "#CCCCCC"}
+      bg={colorMode === "dark" ?'#0D0D0D': '#292929' }
       display="flex"
       maxHeight="45px"
     >
@@ -118,40 +119,49 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
-        {paths.map((item) => (
-          <Box
-            key={item.path}
-            fontSize="sm"
-            onClick={() => handlePathChange(item.path)}
-            color={router.pathname === item.path ? "white" : "inherit"}
-            bg={
-              colorMode === "dark"
-                ? router.pathname === item.path
-                  ? "#292929"
-                  : "#1A202C" 
-                : router.pathname === item.path
-                ? "#2C3477"
-                : "#EDF2F7" 
-            }
-            cursor="pointer"
-            _hover={{
-              bg: colorMode === "dark" ? "#999999" : "#2F5C98",
-              color: colorMode === "dark" ? "#000000" : "#FFFFFF",
-            }}
-            ml={1}
-            mr={1}
-            p={2}
-            rounded="md"
-          >
-            <Text
-              fontSize="15px"
-              textTransform="uppercase"
-              color={router.pathname === item.path ? "white" : "inherit"}
+        {paths.map((item) => {
+          const isCurrentPath = router.pathname === item.path;
+          const isDarkMode = colorMode === "dark";
+          const backgroundColor =
+            isCurrentPath && isDarkMode
+              ? "#666666"
+              : isCurrentPath
+              ? "#666666"
+              : isDarkMode
+              ? "#0D0D0D"
+              : "#666666";
+          const hoverBackgroundColor =
+            isDarkMode
+              ? "#666666"
+              : "#0D0D0D"; 
+  
+          return (
+            <Box
+              key={item.path}
+              fontSize="md"
+              onClick={() => handlePathChange(item.path)}
+              color={isCurrentPath ? "#666666" : "inherit"}
+              bg={backgroundColor}
+              cursor="pointer"
+              _hover={{
+                bg: hoverBackgroundColor,
+                
+              }}
+              ml={1}
+              mr={1}
+              p={2}
+              rounded="md"
             >
-              {item.label}
-            </Text>
-          </Box>
-        ))}
+              <Text
+                fontSize="15px"
+                textTransform="uppercase"
+                color= '#FFFFFF'
+              >
+                {item.label}
+              </Text>
+            </Box>
+          );
+        })}
       </Flex>
       )}
       <AuthProvider>
