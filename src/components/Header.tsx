@@ -128,10 +128,10 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
               colorMode === "dark"
                 ? router.pathname === item.path
                   ? "#292929"
-                  : "#1A202C" // Dark mode background for all items
+                  : "#1A202C" 
                 : router.pathname === item.path
                 ? "#2C3477"
-                : "#EDF2F7" // Light mode background for all items
+                : "#EDF2F7" 
             }
             cursor="pointer"
             _hover={{
