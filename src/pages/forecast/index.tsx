@@ -12,7 +12,7 @@ const ForecastWeather = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/'); // Redirect to login page if token is not present
+      router.push('/'); 
     } else {
       setIsLoading(false); 
     }
