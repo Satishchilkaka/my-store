@@ -104,7 +104,6 @@ export const SignInForm = () => {
 
       <FormControl mb={2}>
       <RememberMeCheckbox onToggle={setRememberMe} />
-        {/* <Checkbox name="rememberMe">Remember Me</Checkbox> */}
       </FormControl>
 
       <Button type="submit"  variant= {'primary'}size="lg" mt={3} mb={5} width="70%">
