@@ -33,7 +33,7 @@ export const ProfileMenu = () => {
   interface DecodedToken {
     id: string;
     role: string;
-    username: string; // Add the 'username' property
+    username: string; 
     
   }
     const decodedToken = auth.token ? (jwtDecode(auth.token) as DecodedToken) : null;

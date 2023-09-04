@@ -12,6 +12,7 @@ import { Layout } from '@/components/Layout';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import withSession from '@/util/withSession';
+import UserProfile from '@/hooks/userProfile';
 interface ProfileProps {
   token: string; 
 }
@@ -98,6 +99,9 @@ const Current: React.FC = () => {
         
         </Box>
       )}
+       </Box>
+       <Box>
+        {/* <UserProfile/> */}
        </Box>
       </Flex> 
     </Layout>
