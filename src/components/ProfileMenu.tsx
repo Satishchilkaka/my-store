@@ -30,16 +30,20 @@ export const ProfileMenu = () => {
     router.push('/');
   };
 
-  interface DecodedToken {
+  interface userProfile {
     id: string;
     role: string;
     username: string; 
+    profile: {
+      firstName: string,
+      lastName: string
+    }
     
   }
-    const decodedToken = auth.token ? (jwtDecode(auth.token) as DecodedToken) : null;
-  const username = decodedToken ? decodedToken?.username : null;
+    const getUserProfileData = auth.token ? (jwtDecode(auth.token) as userProfile) : null;
+  const firstName = getUserProfileData ? getUserProfileData?.profile.firstName: null
+  const lastName = getUserProfileData ? getUserProfileData?.profile.lastName: null;
 
-  console.log(username);
   return (
     <Menu>
       <MenuButton
@@ -53,7 +57,7 @@ export const ProfileMenu = () => {
         <MenuItem>
           <Flex alignItems="center">
           <Avatar size="sm" src={auth.user?.avatarUrl} />
-           <Text ml={2}>{username}</Text>     {/*Display user name from token */}
+           <Text ml={2}>{firstName} {lastName}</Text>     
           </Flex>
         </MenuItem>
         
