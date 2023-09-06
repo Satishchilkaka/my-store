@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {RememberMeCheckbox} from '@/components/customComponents/RememberMeCheckbox'
-
+const API = process.env.NEXT_PUBLIC_API_URL;
 interface FormValues {
   username: string;
   password: string;
@@ -35,7 +35,7 @@ export const SignInForm = () => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const response = await axios.post("http://localhost:3001/v1/login", {
+      const response = await axios.post(`${API}/v1/login`, {
         username: values.username,
         password: values.password,
       });

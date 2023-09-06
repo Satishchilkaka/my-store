@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading , Text} from '@chakra-ui/react';
