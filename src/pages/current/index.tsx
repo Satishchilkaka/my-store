@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading , Text} from '@chakra-ui/react';
-import { WeatherData } from '@/types/weatherData';
+import { WeatherData } from '@/interface/weatherData';
 import { parse } from 'cookie';
 
 import cityData from '../../assets/cityNames.json';

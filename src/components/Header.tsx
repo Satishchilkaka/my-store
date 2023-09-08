@@ -17,7 +17,7 @@ import {
 import { observer } from 'mobx-react-lite';
 import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavigationItem } from '../types/navigationItems';
+import { NavigationItem } from '../interface/navigationItems';
 import { ProfileMenu } from '@/components/ProfileMenu';
 import { AuthProvider } from '../pages/api/auth';
 

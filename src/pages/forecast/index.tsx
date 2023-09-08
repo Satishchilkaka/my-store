@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { ForecastWeatherData } from "@/types/weatherData";
+import { ForecastWeatherData } from "@/interface/weatherData";
 import { getForecastWeather } from "@/util/currentWeather";
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import router from "next/router";
