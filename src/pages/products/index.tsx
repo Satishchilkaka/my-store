@@ -27,7 +27,7 @@ function ProductList() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const token = localStorage.getItem('token'); // Replace with your actual token key
+      const token = localStorage.getItem('token'); 
       console.log(token);
       if (!token) {
         // Handle the case where the token is not available in localStorage
