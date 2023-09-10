@@ -8,6 +8,9 @@ import {
   Grid,
   GridItem,
   Button,
+  Input,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/react';
 import { Layout } from '@/components/Layout';
 
@@ -39,7 +42,39 @@ function ProductList() {
     fetchProducts();
   }, []);
 
-  console.log('products', products);
+  const handleIncreaseQuantity = (productId: string) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    );
+  };
+
+  // Function to handle quantity decrease
+  const handleDecreaseQuantity = (productId: string) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId && product.quantity > 1 // Ensure quantity doesn't go below 1
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      )
+    );
+  };
+  const handleQuantityChange = (productId: string, newQuantity: string) => {
+    // Parse the newQuantity to an integer
+    const parsedQuantity = parseInt(newQuantity, 10);
+
+    // Check if the parsed quantity is a valid number and greater than or equal to 1
+    if (!isNaN(parsedQuantity) && parsedQuantity >= 1) {
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product._id === productId ? { ...product, quantity: parsedQuantity } : product
+        )
+      );
+    }
+  };
 
   return (
     <Layout title='Products' noHeader={false} withNoMenus={true}>
@@ -52,7 +87,31 @@ function ProductList() {
                 {product.name}
               </Text>
               <Text fontSize="md">Price: ${product.price}</Text>
-              <Text fontSize="md">Quantity: {product.quantity}</Text>
+              <Text fontSize="md">Quantity:</Text>
+              <Button
+                size="sm"
+                onClick={() => handleDecreaseQuantity(product._id)}
+                colorScheme="teal"
+              >
+                -
+              </Button>
+              <NumberInput
+                size="sm"
+                min={1}
+                value={product.quantity.toString()} // Convert quantity to string for input field
+                onChange={(newQuantity) =>
+                  handleQuantityChange(product._id, newQuantity)
+                }
+              >
+                <NumberInputField />
+              </NumberInput>
+              <Button
+                size="sm"
+                onClick={() => handleIncreaseQuantity(product._id)}
+                colorScheme="teal"
+              >
+                +
+              </Button>              
               <Button mt={2}>
                 Add to cart
               </Button>
