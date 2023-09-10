@@ -23,8 +23,8 @@ import { AuthProvider } from '../pages/api/auth';
 
 const paths: NavigationItem[] = [
   {
-    label: "Current Weather",
-    path: "/current",
+    label: "Home",
+    path: "/",
   },
   {
     label: "Forecast Weather",

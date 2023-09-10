@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Head from 'next/head';
 import { Header } from '@/components/Header';
 import LoginPage from './login';
+import Products from './products';
 
 const Home = () => {
 
@@ -15,7 +16,8 @@ const Home = () => {
     <title></title>
   </Head>
 <main>
-<LoginPage/>
+{/* <LoginPage/> */}
+<Products/>
 </main>
     </>
   )
