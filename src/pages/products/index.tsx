@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Text,
   ChakraProvider,
   CSSReset,
+  Grid,
+  GridItem,
+  Button,
 } from '@chakra-ui/react';
 
 interface Product {
@@ -22,12 +19,11 @@ interface Product {
 }
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
-
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function fetchProducts() {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token');
       console.log(token);
       if (!token) {
         // Handle the case where the token is not available in localStorage
@@ -38,9 +34,7 @@ function ProductList() {
       try {
         // Fetch products from your backend API with the authorization header
         const response = await axios.get('http://localhost:3001/v1/products', {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the header
-          },
+        
         });
         setProducts(response.data);
       } catch (error) {
@@ -51,33 +45,27 @@ function ProductList() {
     fetchProducts();
   }, []);
 
-  console.log('products', products)
+  console.log('products', products);
 
   return (
     <ChakraProvider>
       <CSSReset />
       <Box p="4">
-        <Text fontSize="2xl" fontWeight="bold" mb="4">Product List</Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Category</Th>
-              <Th>Price</Th>
-              <Th>Quantity</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {/* {products.map((product) => (
-              <Tr key={product._id}>
-                <Td>{product.name}</Td>
-                <Td>{product.category}</Td>
-                <Td>${product.price.toFixed(2)}</Td>
-                <Td>{product.quantity}</Td>
-              </Tr>
-            ))} */}
-          </Tbody>
-        </Table>
+       
+        <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={4}>
+          {products.map((product) => (
+            <GridItem key={product._id}  p={4} borderRadius="md" boxShadow="md">
+              <Text fontSize="lg" fontWeight="bold" mb={2}>
+                {product.name}
+              </Text>
+              <Text fontSize="md">Price: ${product.price}</Text>
+              <Text fontSize="md">Quantity: {product.quantity}</Text>
+              <Button mt={2}>
+                Add to cart
+              </Button>
+            </GridItem>
+          ))}
+        </Grid>
       </Box>
     </ChakraProvider>
   );
