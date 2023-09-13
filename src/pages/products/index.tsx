@@ -11,6 +11,9 @@ import {
   Input,
   NumberInput,
   NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from '@chakra-ui/react';
 import { Layout } from '@/components/Layout';
 
@@ -63,10 +66,8 @@ function ProductList() {
     );
   };
   const handleQuantityChange = (productId: string, newQuantity: string) => {
-    // Parse the newQuantity to an integer
     const parsedQuantity = parseInt(newQuantity, 10);
 
-    // Check if the parsed quantity is a valid number and greater than or equal to 1
     if (!isNaN(parsedQuantity) && parsedQuantity >= 1) {
       setProducts((prevProducts) =>
         prevProducts.map((product) =>
@@ -80,39 +81,36 @@ function ProductList() {
     <Layout title='Products' noHeader={false} withNoMenus={true}>
       <Box p="4">
        
-        <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={4}>
+      <Grid templateColumns="repeat(auto-fill, minmax(400px, 1fr))" gap={4}>
           {products.map((product) => (
-            <GridItem key={product._id}  p={4} borderRadius="md" boxShadow="md">
+            <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
               <Text fontSize="lg" fontWeight="bold" mb={2}>
                 {product.name}
               </Text>
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity:</Text>
-              <Button
-                size="sm"
-                onClick={() => handleDecreaseQuantity(product._id)}
-                colorScheme="teal"
-              >
-                -
-              </Button>
               <NumberInput
+              defaultValue={1}
+                // defaultValue={product.quantity}
                 size="sm"
                 min={1}
-                value={product.quantity.toString()} // Convert quantity to string for input field
-                onChange={(newQuantity) =>
-                  handleQuantityChange(product._id, newQuantity)
-                }
+                onChange={(newQuantity) => handleQuantityChange(product._id, newQuantity)}
               >
                 <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper
+                    // bg="green.200"
+                    // _active={{ bg: 'green.300' }}
+                  
+                  />
+                  <NumberDecrementStepper
+                    // bg="pink.200"
+                    // _active={{ bg: 'pink.300' }}
+                    
+                  />
+                </NumberInputStepper>
               </NumberInput>
-              <Button
-                size="sm"
-                onClick={() => handleIncreaseQuantity(product._id)}
-                colorScheme="teal"
-              >
-                +
-              </Button>              
-              <Button mt={2}>
+              <Button mt={2} colorScheme="teal">
                 Add to cart
               </Button>
             </GridItem>
