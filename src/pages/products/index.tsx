@@ -14,6 +14,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Image
 } from '@chakra-ui/react';
 import { Layout } from '@/components/Layout';
 
@@ -23,6 +24,7 @@ interface Product {
   category: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 }
 
 function ProductList() {
@@ -84,12 +86,15 @@ function ProductList() {
       <Grid templateColumns="repeat(auto-fill, minmax(400px, 1fr))" gap={4}>
           {products.map((product) => (
             <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
+              <Image src={product.imageUrl} alt={product.name} maxH="150px" />
               <Text fontSize="lg" fontWeight="bold" mb={2}>
                 {product.name}
               </Text>
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity:</Text>
               <NumberInput
+              minWidth="60px"
+              maxWidth={"80px"}
               defaultValue={1}
                 // defaultValue={product.quantity}
                 size="sm"
