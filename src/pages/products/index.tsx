@@ -81,47 +81,42 @@ function ProductList() {
 
   return (
     <Layout title='Products' noHeader={false} withNoMenus={true}>
-      <Box p="4">
-       
+        <Box p="4">
       <Grid templateColumns="repeat(auto-fill, minmax(400px, 1fr))" gap={4}>
-          {products.map((product) => (
-            <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
-              <Image src={product.imageUrl} alt={product.name} maxH="150px" />
-              <Text fontSize="lg" fontWeight="bold" mb={2}>
-                {product.name}
-              </Text>
-              <Text fontSize="md">Price: ${product.price}</Text>
-              <Text fontSize="md">Quantity:</Text>
-              <NumberInput
+        {products.map((product) => (
+          <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
+            <Image
+              src={product.imageUrl} 
+              alt={product.name}
+              maxH="150px"
+              objectFit="cover" 
+            />
+            <Text fontSize="lg" fontWeight="bold" mb={2}>
+              {product.name}
+            </Text>
+            <Text fontSize="md">Price: ${product.price}</Text>
+            <Text fontSize="md">Quantity:</Text>
+            <NumberInput
               minWidth="60px"
-              maxWidth={"80px"}
+              maxWidth="80px"
               defaultValue={1}
-                // defaultValue={product.quantity}
-                size="sm"
-                min={1}
-                onChange={(newQuantity) => handleQuantityChange(product._id, newQuantity)}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper
-                    // bg="green.200"
-                    // _active={{ bg: 'green.300' }}
-                  
-                  />
-                  <NumberDecrementStepper
-                    // bg="pink.200"
-                    // _active={{ bg: 'pink.300' }}
-                    
-                  />
-                </NumberInputStepper>
-              </NumberInput>
-              <Button mt={2} colorScheme="teal">
-                Add to cart
-              </Button>
-            </GridItem>
-          ))}
-        </Grid>
-      </Box>
+              size="sm"
+              min={1}
+              onChange={(newQuantity) => handleQuantityChange(product._id, newQuantity)}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Button mt={2} colorScheme="teal">
+              Add to cart
+            </Button>
+          </GridItem>
+        ))}
+      </Grid>
+    </Box>
    </Layout>
   );
 }
