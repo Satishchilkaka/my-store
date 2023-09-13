@@ -61,7 +61,7 @@ function ProductList() {
   const handleDecreaseQuantity = (productId: string) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product._id === productId && product.quantity > 1 // Ensure quantity doesn't go below 1
+        product._id === productId && product.quantity > 1 
           ? { ...product, quantity: product.quantity - 1 }
           : product
       )
