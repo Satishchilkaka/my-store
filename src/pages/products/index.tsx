@@ -24,7 +24,7 @@ interface Product {
   category: string;
   price: number;
   quantity: number;
-  imageUrl: string;
+  imageURL: string;
 }
 
 function ProductList() {
@@ -86,11 +86,11 @@ function ProductList() {
         {products.map((product) => (
           <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
             <Image
-              src={product.imageUrl} 
-              alt={product.name}
-              maxH="150px"
-              objectFit="cover" 
-            />
+                src={product.imageURL}
+                alt={product.name}
+                maxH="150px"
+                objectFit="cover"
+              />
             <Text fontSize="lg" fontWeight="bold" mb={2}>
               {product.name}
             </Text>
