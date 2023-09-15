@@ -3,8 +3,7 @@ import axios from 'axios';
 import {
   Box,
   Text,
-  ChakraProvider,
-  CSSReset,
+ 
   Grid,
   GridItem,
   Button,
