@@ -32,7 +32,7 @@ function ProductList() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        // Fetch products from your backend API with the authorization header
+        // Fetch products from your backend API 
         const response = await axios.get(
           "http://localhost:3001/v1/products",
           {}
