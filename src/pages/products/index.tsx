@@ -133,3 +133,4 @@ export default ProductList;
 
 
 // TODO: import products and connect to S3
+// TODO: add S3 s3://demo-bucket-sss/images/Broccoli.webp to mongoDB and retrieving
