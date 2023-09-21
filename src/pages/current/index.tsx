@@ -20,7 +20,7 @@ const Current: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/'); // Redirect to login page if token is not present
+      router.push('/'); // Redirect
     } else {
       setIsLoading(false); 
     }
