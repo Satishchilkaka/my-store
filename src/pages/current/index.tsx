@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { fetchWeatherData } from '../../util/currentWeather';
 import { Box, Button, Flex, FormControl, Heading , Text} from '@chakra-ui/react';
 import { WeatherData } from '@/interface/weatherData';
-import { parse } from 'cookie';
 
 import cityData from '../../assets/cityNames.json';
 import { Layout } from '@/components/Layout';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import withSession from '@/util/withSession';
 
 
 const Current: React.FC = () => {
