@@ -4,9 +4,9 @@ const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const region = process.env.AWS_REGION
 
 AWS.config.update({
-  accessKeyId: 'your-access-key-id',
-  secretAccessKey: 'your-secret-access-key',
-  region: 'your-region',
+  accessKeyId: accessKeyId,
+  secretAccessKey: secretAccessKey,
+  region: region,
 });
 
 const s3 = new AWS.S3();
