@@ -2,23 +2,25 @@ import { Layout } from '@/components/Layout';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import s3 from '../../util/awsConfig'
 const FAQ = () => {
-  const awss3 = s3
-  console.log('awsConfig', awss3)
-  async function testAWSConnection() {
-    try {
-      const data = await s3.listBuckets().promise();
+  const aws = s3
+  console.log('aws', aws)
+
+  const listObjectsParams = {
+    Bucket: 'demo-bucket-sss',
+  };
   
-      const buckets = data.Buckets ?? [];
-  
-      console.log('Connected to AWS. Buckets:');
-      buckets.forEach((bucket) => {
-        console.log(bucket.Name);
+  aws.listObjects(listObjectsParams, (err, data) => {
+    if (err) {
+      console.error('Error listing objects:', err);
+    } else {
+      data.Contents.forEach((object) => {
+        const imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${object.Key}`;
+        console.log('Image URL:', imageUrl);
       });
-    } catch (error) {
-      console.error('Error connecting to AWS:', error);
     }
-  }
-  testAWSConnection()
+  });
+  
+ 
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
 <Box>
