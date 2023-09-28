@@ -1,15 +1,15 @@
 import { Layout } from '@/components/Layout';
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import s3 from '../../util/awsConfig'
+import { s3, bucketName, region } from '../../util/awsConfig';
+
 const FAQ = () => {
-  const aws = s3
-  console.log('aws', aws)
+  console.log('aws', s3);
 
   const listObjectsParams = {
-    Bucket: 'demo-bucket-sss',
+    Bucket: bucketName, // Use the imported bucketName here
   };
-  
-  aws.listObjects(listObjectsParams, (err, data) => {
+
+  s3.listObjects(listObjectsParams, (err, data) => {
     if (err) {
       console.error('Error listing objects:', err);
     } else {
@@ -19,19 +19,16 @@ const FAQ = () => {
       });
     }
   });
-  
- 
+
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
-<Box>
-  
-</Box>
-    <Flex direction="column" align="center" justify="center" h="100vh">
-      <Heading as="h1" size="xl" mb={4}>
-        FAQ Page
-      </Heading>
-      <p>This is the FAQ page content.</p>
-    </Flex>
+      <Box></Box>
+      <Flex direction="column" align="center" justify="center" h="100vh">
+        <Heading as="h1" size="xl" mb={4}>
+          FAQ Page
+        </Heading>
+        <p>This is the FAQ page content.</p>
+      </Flex>
     </Layout>
   );
 };
