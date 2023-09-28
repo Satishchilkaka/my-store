@@ -6,7 +6,7 @@ const FAQ = () => {
   console.log('aws', s3);
 
   const listObjectsParams = {
-    Bucket: bucketName, // Use the imported bucketName here
+    Bucket: bucketName, 
   };
 
   s3.listObjects(listObjectsParams, (err, data) => {
@@ -14,7 +14,7 @@ const FAQ = () => {
       console.error('Error listing objects:', err);
     } else {
       data.Contents.forEach((object) => {
-        const imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${object.Key}`;
+        const imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/`;
         console.log('Image URL:', imageUrl);
       });
     }
