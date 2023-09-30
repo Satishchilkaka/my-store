@@ -1,45 +1,47 @@
+import React, { useEffect, useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { s3, bucketName, region } from '../../util/awsConfig';
 
 const FAQ = () => {
-  console.log('aws', s3);
- 
+  const [imageUrls, setImageUrls] = useState([]);
 
-  if (!bucketName) {
-    console.error('AWS_BUCKET_NAME is not defined');
-    return null;
-  }
-  const listObjectsParams = {
-    Bucket: bucketName, 
-  };
+  useEffect(() => {
+    // Fetch and construct image URLs when the component mounts
+    listS3Objects();
+  }, []);
 
-
- 
-  
-
-  
-  const config = {
-      // bucketName: bucketName,
-      region: region,
-    
-  }
-  console.log(config)
-
-  s3.listObjects(listObjectsParams, (err, data) => {
-    if (err) {
-      console.error('Error listing objects:', err);
-    } else {
-      data.Contents.forEach((object) => {
-        const imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/`;
-        console.log('Image URL:', imageUrl);
-      });
+  const listS3Objects = () => {
+    if (!bucketName) {
+      console.error('AWS_BUCKET_NAME is not defined');
+      return;
     }
-  });
+
+    const listObjectsParams = {
+      Bucket: bucketName,
+    };
+
+    s3.listObjects(listObjectsParams, (err, data) => {
+      if (err) {
+        console.error('Error listing objects:', err);
+      } else {
+        // Construct image URLs and store them in state
+        const urls = data.Contents.map((object) => {
+          return `https://${bucketName}.s3.${region}.amazonaws.com/${object.Key}`;
+        });
+        setImageUrls(urls);
+      }
+    });
+  };
 
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
-      <Box></Box>
+      <Box>
+        {/* Display the fetched image URLs */}
+        {imageUrls.map((imageUrl, index) => (
+          <img key={index} src={imageUrl} alt={`Image ${index}`} />
+        ))}
+      </Box>
       <Flex direction="column" align="center" justify="center" h="100vh">
         <Heading as="h1" size="xl" mb={4}>
           FAQ Page
