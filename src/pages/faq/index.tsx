@@ -4,25 +4,27 @@ import { s3, bucketName, region } from '../../util/awsConfig';
 
 const FAQ = () => {
   console.log('aws', s3);
+ 
 
+  if (!bucketName) {
+    console.error('AWS_BUCKET_NAME is not defined');
+    return null;
+  }
   const listObjectsParams = {
     Bucket: bucketName, 
   };
 
-  // const accessKeyId = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
-  // const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-  // const region = process.env.AWS_REGION;
-  // const bucketName = process.env.AWS_BUCKET_NAME;
+
+ 
   
 
   
-  // const config = {
-  //     bucketName: bucketName,
-  //     region: region,
-  //     accessKeyId: accessKeyId,
-  //     secretAccessKey: secretAccessKey
-  // }
-  // console.log(config)
+  const config = {
+      // bucketName: bucketName,
+      region: region,
+    
+  }
+  console.log(config)
 
   s3.listObjects(listObjectsParams, (err, data) => {
     if (err) {
