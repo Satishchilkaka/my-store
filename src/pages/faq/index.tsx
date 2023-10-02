@@ -37,7 +37,7 @@ const FAQ = () => {
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
       <Box>
-        {/* Display the fetched image URLs */}
+        
         {imageUrls.map((imageUrl, index) => (
           <img key={index} src={imageUrl} alt={`Image ${index}`} />
         ))}
