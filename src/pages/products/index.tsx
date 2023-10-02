@@ -28,13 +28,13 @@ interface Product {
 
 function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        // Fetch products from your backend API 
         const response = await axios.get(
-          "http://localhost:3001/v1/products",
+          `${API}/v1/products`,
           {}
         );
         setProducts(response.data);
@@ -83,9 +83,14 @@ function ProductList() {
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
       <Box p="4">
-        <Grid templateColumns="repeat(auto-fill, minmax(400px, 1fr))" gap={4}>
+        <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
           {products.map((product) => (
             <GridItem key={product._id} p={4} borderRadius="md" boxShadow="md">
+              <Flex alignItems="center">
+              <Text fontSize="lg" fontWeight="bold" mb={2}>
+                  {product.name}
+                </Text>
+              </Flex>
               <Image
                 src={product.imageURL}
                 alt={product.name}
@@ -93,15 +98,13 @@ function ProductList() {
                 objectFit="cover"
               />
               <Flex alignItems="center">
-                <Text fontSize="lg" fontWeight="bold" mb={2}>
-                  {product.name}
-                </Text>
-                <Text fontSize="md" ml={2}>
+             
+                <Text fontSize="md" fontWeight="bold" >
                   Price: ${product.price}
                 </Text>
               </Flex>
-
-              <Text fontSize="md">Quantity:</Text>
+<Box display={'flex'} alignItems='center' gap={2}>
+<Text fontSize="md">Quantity:</Text>
               <NumberInput
                 minWidth="60px"
                 maxWidth="80px"
@@ -118,6 +121,8 @@ function ProductList() {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+</Box>
+             
               <Button mt={2} colorScheme="teal">
                 Add to cart
               </Button>
