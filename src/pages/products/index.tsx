@@ -28,13 +28,13 @@ interface Product {
 
 function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
-  const API = process.env.NEXT_PUBLIC_API_URL;
+  const api = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const response = await axios.get(
-          `${API}/v1/products`,
+          `${api}/v1/products`,
           {}
         );
         setProducts(response.data);

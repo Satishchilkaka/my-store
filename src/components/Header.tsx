@@ -27,8 +27,8 @@ const paths: NavigationItem[] = [
     path: "/",
   },
   {
-    label: "Forecast Weather",
-    path: "/forecast",
+    label: "orders",
+    path: "/orders",
   },
 ];
 
