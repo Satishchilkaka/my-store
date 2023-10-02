@@ -7,7 +7,6 @@ const FAQ = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
-    // Fetch and construct image URLs when the component mounts
     listS3Objects();
   }, []);
 
@@ -21,17 +20,17 @@ const FAQ = () => {
       Bucket: bucketName,
     };
 
-    s3.listObjects(listObjectsParams, (err, data) => {
-      if (err) {
-        console.error('Error listing objects:', err);
-      } else {
-        // Construct image URLs and store them in state
-        const urls = data.Contents.map((object) => {
-          return `https://${bucketName}.s3.${region}.amazonaws.com/${object.Key}`;
-        });
-        setImageUrls(urls);
-      }
-    });
+    // s3.listObjects(listObjectsParams, (err, data) => {
+    //   if (err) {
+    //     console.error('Error listing objects:', err);
+    //   } else {
+    //     // Construct image URLs and store them in state
+    //     const urls = data.Contents.map((object) => {
+    //       return `https://${bucketName}.s3.${region}.amazonaws.com/${object.Key}`;
+    //     });
+    //     setImageUrls(urls);
+    //   }
+    // });
   };
 
   return (
