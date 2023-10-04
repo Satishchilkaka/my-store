@@ -33,7 +33,7 @@ interface Product {
 
 function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const api = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
@@ -93,36 +93,28 @@ function ProductList() {
           onChange={(e) => setSearchQuery(e.target.value)}
           mb={4}
         />
-        <Tabs
-          isFitted
-          variant="enclosed"
-          onChange={(index) => {
-            
-          }}
-        >
+        <Tabs isFitted variant="enclosed" onChange={(index) => {}}>
           <TabList>
             <Tab onClick={() => setSelectedCategory(null)}>All</Tab>
-            <Tab onClick={() => setSelectedCategory("Vegetables")}>Vegetables</Tab>
+            <Tab onClick={() => setSelectedCategory("Vegetables")}>
+              Vegetables
+            </Tab>
             <Tab onClick={() => setSelectedCategory("Fruits")}>Fruits</Tab>
             <Tab onClick={() => setSelectedCategory("Meat")}>Meat</Tab>
           </TabList>
-          <TabPanels>
-   
-          </TabPanels>
+          <TabPanels></TabPanels>
         </Tabs>
         <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
-        {products
-  .filter((product) =>
-    selectedCategory
-      ? product.category === selectedCategory
-      : true 
-  )
-  .filter((product) =>
-    searchQuery
-      ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      : true
-  )
-  .map((product) => (
+          {products
+            .filter((product) =>
+              selectedCategory ? product.category === selectedCategory : true
+            )
+            .filter((product) =>
+              searchQuery
+                ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
+                : true
+            )
+            .map((product) => (
               <GridItem
                 key={product._id}
                 p={4}
