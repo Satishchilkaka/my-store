@@ -177,5 +177,5 @@ function ProductList() {
 
 export default ProductList;
 
-// TODO:  Remove search and seperate
+// TODO:  Remove search and separate
 // Fix a bug with all tab search
