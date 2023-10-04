@@ -110,6 +110,7 @@ function ProductList() {
               selectedCategory ? product.category === selectedCategory : true
             )
             .filter((product) =>
+            
               searchQuery
                 ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
                 : true
