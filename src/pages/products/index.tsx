@@ -49,26 +49,6 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
-  const handleIncreaseQuantity = (productId: string) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product._id === productId
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      )
-    );
-  };
-
-  // Function to handle quantity decrease
-  const handleDecreaseQuantity = (productId: string) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product._id === productId && product.quantity > 1
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      )
-    );
-  };
   const handleQuantityChange = (productId: string, newQuantity: string) => {
     const parsedQuantity = parseInt(newQuantity, 10);
 
@@ -133,10 +113,12 @@ const ProductList = () => {
         <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
           {products
             .filter((product) =>
-              selectedCategory ? product.category === selectedCategory : true
+              selectedCategory && selectedCategory !== "All"
+                ? product.category === selectedCategory
+                : true
             )
             .filter((product) =>
-              searchQuery
+              searchQuery && typeof searchQuery === "string" && product.name
                 ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
                 : true
             )
