@@ -19,7 +19,9 @@ import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavigationItem } from '../interface/navigationItems';
 import { ProfileMenu } from '@/components/ProfileMenu';
+
 import { AuthProvider } from '../pages/api/auth';
+import { Cart } from "./cart";
 
 const paths: NavigationItem[] = [
   {
@@ -165,6 +167,7 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
       </Flex>
       )}
       <AuthProvider>
+      <Cart />
         <ProfileMenu />
       </AuthProvider>
     </Flex>
