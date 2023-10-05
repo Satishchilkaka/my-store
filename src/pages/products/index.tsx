@@ -31,7 +31,7 @@ interface Product {
   imageURL: string;
 }
 
-function ProductList() {
+const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -93,24 +93,49 @@ function ProductList() {
           onChange={(e) => setSearchQuery(e.target.value)}
           mb={4}
         />
-        <Tabs isFitted variant="enclosed" onChange={(index) => {}}>
+        <Tabs
+          isFitted
+          variant="soft-rounded"
+          colorScheme="green"
+          border={"medium"}
+          borderColor="#999999"
+          onChange={(index) => {}}
+        >
           <TabList>
-            <Tab onClick={() => setSelectedCategory(null)}>All</Tab>
-            <Tab onClick={() => setSelectedCategory("Vegetables")}>
+            <Tab
+              onClick={() => setSelectedCategory(null)}
+              sx={{ fontWeight: "bold", fontSize: "xl" }}
+            >
+              All
+            </Tab>
+            <Tab
+              onClick={() => setSelectedCategory("Vegetables")}
+              sx={{ fontWeight: "bold", fontSize: "xl" }}
+            >
               Vegetables
             </Tab>
-            <Tab onClick={() => setSelectedCategory("Fruits")}>Fruits</Tab>
-            <Tab onClick={() => setSelectedCategory("Meat")}>Meat</Tab>
+            <Tab
+              onClick={() => setSelectedCategory("Fruits")}
+              sx={{ fontWeight: "bold", fontSize: "xl" }}
+            >
+              Fruits
+            </Tab>
+            <Tab
+              onClick={() => setSelectedCategory("Meat")}
+              sx={{ fontWeight: "bold", fontSize: "xl" }}
+            >
+              Meat
+            </Tab>
           </TabList>
           <TabPanels></TabPanels>
         </Tabs>
+
         <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
           {products
             .filter((product) =>
               selectedCategory ? product.category === selectedCategory : true
             )
             .filter((product) =>
-            
               searchQuery
                 ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
                 : true
@@ -166,7 +191,7 @@ function ProductList() {
       </Box>
     </Layout>
   );
-}
+};
 
 export default ProductList;
 
