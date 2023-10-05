@@ -111,65 +111,71 @@ const ProductList = () => {
         </Tabs>
 
         <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
-          {products
-            .filter((product) =>
-              selectedCategory && selectedCategory !== "All"
-                ? product.category === selectedCategory
-                : true
-            )
-            .filter((product) =>
-              searchQuery && typeof searchQuery === "string" && product.name
-                ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
-                : true
-            )
-            .map((product) => (
-              <GridItem
-                key={product._id}
-                p={4}
-                borderRadius="md"
-                boxShadow="md"
-              >
-                <Flex alignItems="center">
-                  <Text fontSize="lg" fontWeight="bold" mb={2}>
-                    {product.name}
-                  </Text>
-                </Flex>
-                <Image
-                  src={product.imageURL}
-                  alt={product.name}
-                  maxH="150px"
-                  objectFit="cover"
-                />
-                <Flex alignItems="center">
-                  <Text fontSize="md" fontWeight="bold">
-                    Price: ${product.price}
-                  </Text>
-                </Flex>
-                <Flex display={"flex"} alignItems="center" gap={2}>
-                  <Text fontSize="md">Quantity:</Text>
-                  <NumberInput
-                    minWidth="60px"
-                    maxWidth="80px"
-                    defaultValue={1}
-                    size="sm"
-                    min={1}
-                    onChange={(newQuantity) =>
-                      handleQuantityChange(product._id, newQuantity)
-                    }
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Flex>
-                <Button mt={2} colorScheme="teal">
-                  Add to cart
-                </Button>
-              </GridItem>
-            ))}
-        </Grid>
+  {products
+    .filter((product) =>
+      selectedCategory && selectedCategory !== "All"
+        ? product.category === selectedCategory
+        : true
+    )
+    .filter((product) =>
+      searchQuery && typeof searchQuery === "string" && product.name
+        ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        : true
+    )
+    .map((product) => (
+      <GridItem
+        key={product._id}
+        p={4}
+        borderRadius="md"
+        boxShadow="md"
+      >
+        <Flex alignItems="center">
+          <Text fontSize="lg" fontWeight="bold" mb={2}>
+            {product.name}
+          </Text>
+        </Flex>
+        <Image
+          src={product.imageURL}
+          alt={product.name}
+          maxH="150px"
+          objectFit="cover"
+        />
+        <Flex alignItems="center">
+          <Text fontSize="md" fontWeight="bold">
+            Price: ${product.price}
+          </Text>
+        </Flex>
+        <Flex display={"flex"} alignItems="center" gap={2}>
+          <Text fontSize="md">Quantity:</Text>
+          <NumberInput
+            minWidth="60px"
+            maxWidth="80px"
+            defaultValue={1}
+            size="sm"
+            min={1}
+            onChange={(newQuantity) =>
+              handleQuantityChange(product._id, newQuantity)
+            }
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </Flex>
+        <Button mt={2} colorScheme="teal">
+          Add to cart
+        </Button>
+      </GridItem>
+    ))}
+  {(!products.length || products.length === 0) && (
+    <Text alignContent={"center"} fontSize="lg" fontWeight="bold" mt={4}>
+      No products found.
+    </Text>
+  )}
+</Grid>
+
       </Box>
     </Layout>
   );
@@ -177,5 +183,5 @@ const ProductList = () => {
 
 export default ProductList;
 
-// TODO:  Remove search and separate
+
 // Fix a bug with all tab search
