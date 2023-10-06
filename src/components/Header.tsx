@@ -19,9 +19,9 @@ import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavigationItem } from '../interface/navigationItems';
 import { ProfileMenu } from '@/components/ProfileMenu';
-
 import { AuthProvider } from '../pages/api/auth';
-import { Cart } from "./cart";
+import Link from "next/link"; 
+import { CartIcon } from '@/components/CartIcon'
 
 const paths: NavigationItem[] = [
   {
@@ -51,7 +51,6 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
     }
   };
 
-  
   return (
     <Flex
       justifyContent="space-between"
@@ -121,56 +120,59 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
         </>
       ) : (
         <Flex alignItems="end" gap={1}>
-        {paths.map((item) => {
-          const isCurrentPath = router.pathname === item.path;
-          const isDarkMode = colorMode === "dark";
-          const backgroundColor =
-            isCurrentPath && isDarkMode
-              ? "#333333"
-              : isCurrentPath
-              ? "#0D0D0D"
-              : isDarkMode
-              ? "#0D0D0D"
-              : "#333333";
-          const hoverBackgroundColor =
-            isDarkMode
-              ? "#666666"
-              : "#0D0D0D"; 
-  
-          return (
-            <Box
-              key={item.path}
-              fontSize="md"
-              onClick={() => handlePathChange(item.path)}
-              color={isCurrentPath ? "#666666" : "inherit"}
-              bg={backgroundColor}
-              cursor="pointer"
-              _hover={{
-                bg: hoverBackgroundColor,
-                
-              }}
-              ml={1}
-              mr={1}
-              p={2}
-              rounded="md"
-            >
-              <Text
-                fontSize="15px"
-                textTransform="uppercase"
-                color= '#FFFFFF'
+          {paths.map((item) => {
+            const isCurrentPath = router.pathname === item.path;
+            const isDarkMode = colorMode === "dark";
+            const backgroundColor =
+              isCurrentPath && isDarkMode
+                ? "#333333"
+                : isCurrentPath
+                ? "#0D0D0D"
+                : isDarkMode
+                ? "#0D0D0D"
+                : "#333333";
+            const hoverBackgroundColor =
+              isDarkMode
+                ? "#666666"
+                : "#0D0D0D"; 
+
+            return (
+              <Box
+                key={item.path}
+                fontSize="md"
+                onClick={() => handlePathChange(item.path)}
+                color={isCurrentPath ? "#666666" : "inherit"}
+                bg={backgroundColor}
+                cursor="pointer"
+                _hover={{
+                  bg: hoverBackgroundColor,
+                }}
+                ml={1}
+                mr={1}
+                p={2}
+                rounded="md"
               >
-                {item.label}
-              </Text>
-            </Box>
-          );
-        })}
-      </Flex>
+                <Text
+                  fontSize="15px"
+                  textTransform="uppercase"
+                  color= '#FFFFFF'
+                >
+                  {item.label}
+                </Text>
+              </Box>
+            );
+          })}
+        </Flex>
       )}
       <AuthProvider>
-      <Cart itemCount={0} />
+       
+      <Link href="/cart">
+     
+          <CartIcon itemCount={1} />
+      
+      </Link>
         <ProfileMenu />
       </AuthProvider>
     </Flex>
   );
 });
-

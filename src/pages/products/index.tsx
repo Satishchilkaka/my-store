@@ -39,15 +39,26 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading state
   const api = process.env.NEXT_PUBLIC_API_URL;
 
+  const [cart, setCart] = useState<Product[]>([]);
+
+const addToCart = (product: Product) => {
+  setCart((prevCart) => [...prevCart, product]);
+};
+
+const removeFromCart = (productId: string) => {
+  setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
+};
+
+
   useEffect(() => {
     async function fetchProducts() {
       try {
         const response = await axios.get(`${api}/v1/products`, {});
         setProducts(response.data);
-        setIsLoading(false); // Set loading to false when data is fetched
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching products:", error);
-        setIsLoading(false); // Set loading to false in case of an error
+        setIsLoading(false); 
       }
     }
 
@@ -175,7 +186,7 @@ const ProductList = () => {
                       </NumberInputStepper>
                     </NumberInput>
                   </Flex>
-                  <Button mt={2} colorScheme="teal">
+                  <Button mt={2} colorScheme="teal" onClick={() => addToCart(product)}>
                     Add to cart
                   </Button>
                 </GridItem>
