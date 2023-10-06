@@ -167,7 +167,7 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
       </Flex>
       )}
       <AuthProvider>
-      <Cart />
+      <Cart itemCount={0} />
         <ProfileMenu />
       </AuthProvider>
     </Flex>
