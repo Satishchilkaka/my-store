@@ -22,6 +22,7 @@ import {
   Spinner, // Import Spinner from Chakra UI
 } from "@chakra-ui/react";
 import { Layout } from "@/components/Layout";
+import { useCart } from '../../util/cartFunction';
 
 interface Product {
   _id: string;
@@ -39,15 +40,21 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading state
   const api = process.env.NEXT_PUBLIC_API_URL;
 
-  const [cart, setCart] = useState<Product[]>([]);
+  const { cart, addToCart } = useCart();
 
-const addToCart = (product: Product) => {
-  setCart((prevCart) => [...prevCart, product]);
-};
+//   const [cart, setCart] = useState<Product[]>([]);
 
-const removeFromCart = (productId: string) => {
-  setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-};
+// const addToCart = (product: Product) => {
+//   setCart((prevCart) => [...prevCart, product]);
+  
+// };
+
+
+console.log('cart', cart.length)
+
+
+
+
 
 
   useEffect(() => {

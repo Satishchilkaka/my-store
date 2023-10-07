@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Flex, Icon, Spacer, Text, useColorMode } from "@chakra-ui/react";
 import { FaShoppingCart } from "react-icons/fa";
 
+
 interface CartIconProps {
   itemCount: number;
 }
@@ -10,6 +11,7 @@ interface CartIconProps {
 export const CartIcon: React.FC<CartIconProps> = ({ itemCount }) => {
   const { colorMode } = useColorMode();
   const iconColor = colorMode === "dark" ? "light" : "black";
+
 
   return (
     <Flex justifyContent="flex-end">

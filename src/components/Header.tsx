@@ -22,7 +22,7 @@ import { ProfileMenu } from '@/components/ProfileMenu';
 import { AuthProvider } from '../pages/api/auth';
 import Link from "next/link"; 
 import { CartIcon } from '@/components/CartIcon'
-
+import { useCart } from  '../util/cartFunction';
 const paths: NavigationItem[] = [
   {
     label: "Home",
@@ -43,6 +43,10 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 600px)");
   const { colorMode } = useColorMode();
+  const { cart } = useCart();
+
+  const items = cart.length
+  console.log('items', items);
 
   const handlePathChange = (path: string) => {
     if (path !== router.pathname) {
@@ -168,7 +172,7 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
        
       <Link href="/cart">
      
-          <CartIcon itemCount={1} />
+          <CartIcon itemCount= {cart.length}/>
       
       </Link>
         <ProfileMenu />
