@@ -51,7 +51,7 @@ const ProductList = () => {
 // };
 
 
-console.log('cart', cart.length)
+console.log('cart', cart)
 
 
 
