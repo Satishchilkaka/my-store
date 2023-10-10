@@ -1,25 +1,27 @@
-// CartIcon.tsx
-import React from "react";
+
+import React, { useState } from "react";
 import { Box, Flex, Icon, Spacer, Text, useColorMode } from "@chakra-ui/react";
 import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from "@/util/cartFunction";
 
 
-interface CartIconProps {
-  itemCount: number;
-}
 
-export const CartIcon: React.FC<CartIconProps> = ({ itemCount }) => {
+
+export const CartIcon = ({  }) => {
   const { colorMode } = useColorMode();
   const iconColor = colorMode === "dark" ? "light" : "black";
 
+  const { cart } = useCart();
 
+  const items = cart.length
+  console.log('items', items);
   return (
     <Flex justifyContent="flex-end">
        <Spacer />
     <Box position="relative" justifyContent="flex-end">
    
       <Icon as={FaShoppingCart} fontSize="26px" color="white" mt={"8px"}/>
-      {itemCount > 0 && (
+      {cart.length > 0 && (
         <Box
           position="absolute"
           top="-2px"
@@ -32,7 +34,7 @@ export const CartIcon: React.FC<CartIconProps> = ({ itemCount }) => {
           height="23px"
           textAlign="center"
         >
-          {itemCount}
+          {cart.length}
         </Box>
       )}
     </Box>

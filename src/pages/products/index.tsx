@@ -22,7 +22,7 @@ import {
   Spinner, // Import Spinner from Chakra UI
 } from "@chakra-ui/react";
 import { Layout } from "@/components/Layout";
-import { useCart } from '../../util/cartFunction';
+import { useCart } from "@/util/cartFunction";
 
 interface Product {
   _id: string;
@@ -32,6 +32,7 @@ interface Product {
   quantity: number;
   imageURL: string;
 }
+
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);

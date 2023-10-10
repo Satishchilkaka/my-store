@@ -43,10 +43,7 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 600px)");
   const { colorMode } = useColorMode();
-  const { cart } = useCart();
-
-  const items = cart.length
-  console.log('items', items);
+ 
 
   const handlePathChange = (path: string) => {
     if (path !== router.pathname) {
@@ -172,7 +169,7 @@ export const Header: React.FC<Props> = observer(({ withNoMenus }: Props) => {
        
       <Link href="/cart">
      
-          <CartIcon itemCount= {cart.length}/>
+          <CartIcon />
       
       </Link>
         <ProfileMenu />
