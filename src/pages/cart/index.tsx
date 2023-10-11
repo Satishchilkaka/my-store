@@ -6,15 +6,13 @@ import { useCart } from "@/util/cartFunction";
 const Cart = () => {
   const { cart, addToCart } = useCart();
 
-  // Function to remove a product from the cart
   const removeFromCart = (productId: string) => {
     const updatedCart = cart.filter((product) => product._id !== productId);
   };
 
-  // Function to proceed to checkout
   const checkout = () => {
-    // Implement the logic to proceed to checkout
-  };
+// TODO: this should be updated 
+};
 
   return (
     <Layout title="Cart" noHeader={false} withNoMenus={true}>
