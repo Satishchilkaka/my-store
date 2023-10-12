@@ -59,3 +59,5 @@ const Cart = () => {
 };
 
 export default Cart;
+
+// TODO: Update cart page make small box, align 
