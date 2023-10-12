@@ -19,7 +19,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
-  Spinner, // Import Spinner from Chakra UI
+  Spinner,
 } from "@chakra-ui/react";
 import { Layout } from "@/components/Layout";
 import { useCart } from "@/util/cartFunction";
