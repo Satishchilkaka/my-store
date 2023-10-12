@@ -33,9 +33,12 @@ const Cart = () => {
               <Text fontSize="lg" fontWeight="bold">
                 {product.name}
               </Text>
+              <Box>
               <Image src={product.imageURL} alt={product.name} maxH="150px" objectFit="cover" mb={2} />
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity: {product.quantity}</Text>
+                </Box>
+             
               <Button
                 colorScheme="red"
                 size="sm"
