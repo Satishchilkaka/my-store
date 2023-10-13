@@ -152,7 +152,7 @@ console.log('cart', cart)
                   ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
                   : true
               )
-              .map((product) => (
+            .map((product) => (
                 <GridItem
                   key={product._id}
                   p={4}
@@ -194,11 +194,12 @@ console.log('cart', cart)
                       </NumberInputStepper>
                     </NumberInput>
                   </Flex>
-                  <Button mt={2} colorScheme="teal" onClick={() => addToCart(product)}>
+                  <Button mt={2} colorScheme="teal" onClick={() => addToCart([product])}>
                     Add to cart
                   </Button>
                 </GridItem>
               ))}
+              
           </Grid>
        
       </Box>

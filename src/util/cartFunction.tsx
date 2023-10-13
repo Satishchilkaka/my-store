@@ -1,4 +1,5 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+// CartFunction.tsx
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 interface Product {
   _id: string;
@@ -9,29 +10,38 @@ interface Product {
   imageURL: string;
 }
 
+const STORAGE_KEY = 'cart';
 
 const CartContext = createContext({
   cart: [] as Product[], // Initialize with an empty array
-  addToCart: (product: Product) => {},
-
+  addToCart: (products: Product[]) => {},
 });
 
 interface CartProviderProps {
   children: ReactNode;
- 
+}
+
+interface CartContextType {
+  cart: Product[];
+  addToCart: (products: Product[]) => void;
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
+  useEffect(() => {
+    // Load cart data from localStorage
+    const savedCart = localStorage.getItem(STORAGE_KEY);
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []); // Run once on component mount
 
-  // TODO: Add remove from cart
-  // const removeFromCart = (productId: any) => {
-  //   setCart((prevCart) => prevCart.filter((product) => product._id !== productId));
-  // };
+  const addToCart = (products: Product[]) => {
+    setCart((prevCart) => [...prevCart, ...products]);
+    // Save the updated cart to localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...cart, ...products]));
+  };
 
   return (
     <CartContext.Provider value={{ cart, addToCart }}>
@@ -43,4 +53,3 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 export const useCart = () => {
   return useContext(CartContext);
 };
-

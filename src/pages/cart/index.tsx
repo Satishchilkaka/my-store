@@ -1,18 +1,40 @@
-import React from "react";
+// Cart.tsx
+import React, { useEffect, useState } from "react";
 import { Box, Text, Button, Image } from "@chakra-ui/react";
 import { Layout } from "@/components/Layout";
 import { useCart } from "@/util/cartFunction";
 
-const Cart = () => {
-  const { cart, addToCart } = useCart();
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  quantity: number;
+  imageURL: string;
+}
 
+const Cart: React.FC = () => {
+  const { cart, addToCart } = useCart();
+  const [localCart, setLocalCart] = useState<Product[]>([]);
+
+  // Initialize localCart with cart data
+  useEffect(() => {
+    setLocalCart(cart);
+  }, [cart]);
+
+  // Function to remove a product from the cart and localStorage
   const removeFromCart = (productId: string) => {
-    const updatedCart = cart.filter((product) => product._id !== productId);
+    const updatedCart = localCart.filter((product) => product._id !== productId);
+    setLocalCart(updatedCart);
+    // Update localStorage with the new cart data
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const checkout = () => {
-// TODO: this should be updated 
-};
+    // Implement your checkout logic here
+    // Clear the cart data in localStorage
+    localStorage.removeItem('cart');
+  };
 
   return (
     <Layout title="Cart" noHeader={false} withNoMenus={true}>
@@ -22,7 +44,7 @@ const Cart = () => {
         </Text>
 
         <Box mt={4}>
-          {cart.map((product) => (
+          {localCart.map((product) => (
             <Box
               key={product._id}
               border="1px solid #ccc"
@@ -33,12 +55,15 @@ const Cart = () => {
               <Text fontSize="lg" fontWeight="bold">
                 {product.name}
               </Text>
-              <Box>
-              <Image src={product.imageURL} alt={product.name} maxH="150px" objectFit="cover" mb={2} />
+              <Image
+                src={product.imageURL}
+                alt={product.name}
+                maxH="150px"
+                objectFit="cover"
+                mb={2}
+              />
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity: {product.quantity}</Text>
-                </Box>
-             
               <Button
                 colorScheme="red"
                 size="sm"
@@ -59,5 +84,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-// TODO: Update cart page make small box, align 
