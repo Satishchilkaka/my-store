@@ -38,7 +38,7 @@ const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading state
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
   const api = process.env.NEXT_PUBLIC_API_URL;
 
   const { cart, addToCart } = useCart();
