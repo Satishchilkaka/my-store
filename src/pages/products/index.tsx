@@ -43,19 +43,8 @@ const ProductList = () => {
 
   const { cart, addToCart } = useCart();
 
-//   const [cart, setCart] = useState<Product[]>([]);
-
-// const addToCart = (product: Product) => {
-//   setCart((prevCart) => [...prevCart, product]);
-  
-// };
-
 
 console.log('cart', cart)
-
-
-
-
 
 
   useEffect(() => {
