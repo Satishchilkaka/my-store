@@ -1,6 +1,5 @@
-// Cart.tsx
 import React, { useEffect, useState } from "react";
-import { Box, Text, Button, Image } from "@chakra-ui/react";
+import { Box, Text, Button, Image, Flex, HStack } from "@chakra-ui/react";
 import { Layout } from "@/components/Layout";
 import { useCart } from "@/util/cartFunction";
 
@@ -14,71 +13,88 @@ interface Product {
 }
 
 const Cart: React.FC = () => {
-  const { cart, addToCart } = useCart();
+  const { cart, removeFromCart } = useCart();
   const [localCart, setLocalCart] = useState<Product[]>([]);
 
   // Initialize localCart with cart data
   useEffect(() => {
-    setLocalCart(cart);
+    // Consolidate items with the same product ID
+    const consolidatedCart: Product[] = [];
+
+    cart.forEach((product) => {
+      const existingProduct = consolidatedCart.find(
+        (item) => item._id === product._id
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += product.quantity;
+      } else {
+        consolidatedCart.push({ ...product });
+      }
+    });
+
+    setLocalCart(consolidatedCart);
   }, [cart]);
 
-  // Function to remove a product from the cart and localStorage
-  const removeFromCart = (productId: string) => {
+  const handleRemoveFromCart = (productId: string) => {
+    // Update the cart locally
     const updatedCart = localCart.filter((product) => product._id !== productId);
     setLocalCart(updatedCart);
-    // Update localStorage with the new cart data
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    // Update the cart globally
+    removeFromCart(productId);
+    // You may also want to update the cart in localStorage
   };
 
   const checkout = () => {
     // Implement your checkout logic here
-    // Clear the cart data in localStorage
-    localStorage.removeItem('cart');
+    // Clear the cart data in localStorage (if needed)
   };
 
   return (
     <Layout title="Cart" noHeader={false} withNoMenus={true}>
-      <Box p={4}>
+      <Flex direction="column">
         <Text fontSize="xl" fontWeight="bold">
           Shopping Cart
         </Text>
-
-        <Box mt={4}>
-          {localCart.map((product) => (
-            <Box
-              key={product._id}
-              border="1px solid #ccc"
-              p={3}
-              borderRadius="md"
-              mb={4}
-            >
-              <Text fontSize="lg" fontWeight="bold">
-                {product.name}
-              </Text>
+        {localCart.map((product) => (
+          <HStack
+            key={product._id}
+            border="1px solid #ccc"
+            p={3}
+            borderRadius="md"
+            mb={4}
+            alignItems="center"
+          >
+            <Box>
               <Image
                 src={product.imageURL}
                 alt={product.name}
-                maxH="150px"
+                maxH="100px"
                 objectFit="cover"
                 mb={2}
               />
+            </Box>
+            <Box>
+              <Text fontSize="lg" fontWeight="bold">
+                {product.name}
+              </Text>
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity: {product.quantity}</Text>
               <Button
                 colorScheme="red"
                 size="sm"
-                onClick={() => removeFromCart(product._id)}
+                onClick={() => handleRemoveFromCart(product._id)}
               >
                 Remove
               </Button>
             </Box>
-          ))}
-        </Box>
-
+          </HStack>
+        ))}
         <Button colorScheme="teal" mt={4} onClick={checkout}>
           Proceed to Checkout
         </Button>
-      </Box>
+      </Flex>
     </Layout>
   );
 };

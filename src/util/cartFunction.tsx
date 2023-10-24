@@ -15,6 +15,7 @@ const STORAGE_KEY = 'cart';
 const CartContext = createContext({
   cart: [] as Product[], // Initialize with an empty array
   addToCart: (products: Product[]) => {},
+  removeFromCart: (productId: string) => {},
 });
 
 interface CartProviderProps {
@@ -24,6 +25,7 @@ interface CartProviderProps {
 interface CartContextType {
   cart: Product[];
   addToCart: (products: Product[]) => void;
+  removeFromCart: (productId: string) => void;
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
@@ -42,9 +44,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     // Save the updated cart to localStorage
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...cart, ...products]));
   };
+  const removeFromCart = (productId: string) => {
+    const updatedCart = cart.filter((product) => product._id !== productId);
+    setCart(updatedCart);
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
