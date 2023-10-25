@@ -18,7 +18,6 @@ const Cart: React.FC = () => {
 
   // Initialize localCart with cart data
   useEffect(() => {
-    // Consolidate items with the same product ID
     const consolidatedCart: Product[] = [];
 
     cart.forEach((product) => {
@@ -37,18 +36,14 @@ const Cart: React.FC = () => {
   }, [cart]);
 
   const handleRemoveFromCart = (productId: string) => {
-    // Update the cart locally
     const updatedCart = localCart.filter((product) => product._id !== productId);
     setLocalCart(updatedCart);
 
-    // Update the cart globally
     removeFromCart(productId);
-    // You may also want to update the cart in localStorage
   };
 
   const checkout = () => {
-    // Implement your checkout logic here
-    // Clear the cart data in localStorage (if needed)
+    // Implement  checkout logic here
   };
 
   return (
@@ -100,3 +95,4 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
+//TODO: review this code

@@ -33,29 +33,26 @@ interface Product {
   imageURL: string;
 }
 
-
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const api = process.env.NEXT_PUBLIC_API_URL;
 
   const { cart, addToCart } = useCart();
 
-
-console.log('cart', cart)
-
+  console.log("cart", cart);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const response = await axios.get(`${api}/v1/products`, {});
         setProducts(response.data);
-        setIsLoading(false); 
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     }
 
@@ -78,57 +75,54 @@ console.log('cart', cart)
 
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
-        {isLoading ? (
-          <Spinner size="xl" color="teal" />
-        ) : (
+      {isLoading ? (
+        <Spinner size="xl" color="teal" />
+      ) : (
+        <Box p="4">
+          <Input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            mb={4}
+          />
+          <Tabs
+            isFitted
+            variant="soft-rounded"
+            colorScheme="green"
+            border={"medium"}
+            borderColor="#999999"
+            onChange={(index) => {}}
+          >
+            <TabList>
+              <Tab
+                onClick={() => setSelectedCategory(null)}
+                sx={{ fontWeight: "bold", fontSize: "xl" }}
+              >
+                All
+              </Tab>
+              <Tab
+                onClick={() => setSelectedCategory("Vegetables")}
+                sx={{ fontWeight: "bold", fontSize: "xl" }}
+              >
+                Vegetables
+              </Tab>
+              <Tab
+                onClick={() => setSelectedCategory("Fruits")}
+                sx={{ fontWeight: "bold", fontSize: "xl" }}
+              >
+                Fruits
+              </Tab>
+              <Tab
+                onClick={() => setSelectedCategory("Meat")}
+                sx={{ fontWeight: "bold", fontSize: "xl" }}
+              >
+                Meat
+              </Tab>
+            </TabList>
+            <TabPanels></TabPanels>
+          </Tabs>
 
-          
-      <Box p="4">
-        <Input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          mb={4}
-        />
-        <Tabs
-          isFitted
-          variant="soft-rounded"
-          colorScheme="green"
-          border={"medium"}
-          borderColor="#999999"
-          onChange={(index) => {}}
-        >
-          <TabList>
-            <Tab
-              onClick={() => setSelectedCategory(null)}
-              sx={{ fontWeight: "bold", fontSize: "xl" }}
-            >
-              All
-            </Tab>
-            <Tab
-              onClick={() => setSelectedCategory("Vegetables")}
-              sx={{ fontWeight: "bold", fontSize: "xl" }}
-            >
-              Vegetables
-            </Tab>
-            <Tab
-              onClick={() => setSelectedCategory("Fruits")}
-              sx={{ fontWeight: "bold", fontSize: "xl" }}
-            >
-              Fruits
-            </Tab>
-            <Tab
-              onClick={() => setSelectedCategory("Meat")}
-              sx={{ fontWeight: "bold", fontSize: "xl" }}
-            >
-              Meat
-            </Tab>
-          </TabList>
-          <TabPanels></TabPanels>
-        </Tabs>
-
-      
           <Grid templateColumns="repeat(auto-fill, minmax(245px, 1fr))" gap={3}>
             {products
               .filter((product) =>
@@ -138,10 +132,12 @@ console.log('cart', cart)
               )
               .filter((product) =>
                 searchQuery && typeof searchQuery === "string" && product.name
-                  ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
+                  ? product.name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
                   : true
               )
-            .map((product) => (
+              .map((product) => (
                 <GridItem
                   key={product._id}
                   p={4}
@@ -183,15 +179,18 @@ console.log('cart', cart)
                       </NumberInputStepper>
                     </NumberInput>
                   </Flex>
-                  <Button mt={2} colorScheme="teal" onClick={() => addToCart([product])}>
-                    Add to cart
-                  </Button>
+                  <Button
+  mt={2}
+  colorScheme="teal"
+  onClick={() => addToCart({ ...product })}
+>
+  Add to cart
+</Button>
+
                 </GridItem>
               ))}
-              
           </Grid>
-       
-      </Box>
+        </Box>
       )}
     </Layout>
   );
