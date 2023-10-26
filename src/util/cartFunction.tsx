@@ -27,12 +27,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Load cart data from localStorage
     const savedCart = localStorage.getItem(STORAGE_KEY);
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
-  }, []); // Run once on component mount
+  }, []); 
 
   const addToCart = (product: Product) => {
     // Check if the product is already in the cart
