@@ -8,7 +8,7 @@ interface Product {
   name: string;
   category: string;
   price: number;
- quantity: number;
+  quantity: number;
   imageURL: string;
 }
 
@@ -35,14 +35,27 @@ const Cart: React.FC = () => {
   }, [cart]);
 
   const handleRemoveFromCart = (productId: string) => {
-    const updatedCart = localCart.filter((product) => product._id !== productId);
+    const updatedCart = localCart.filter(
+      (product) => product._id !== productId
+    );
     setLocalCart(updatedCart);
 
     removeFromCart(productId);
   };
 
+  const getTotalPrice = (product: Product) => {
+    return product.price * product.quantity;
+  };
+
+  const getTotalCartPrice = () => {
+    return localCart.reduce(
+      (total, product) => total + getTotalPrice(product),
+      0
+    );
+  };
+
   const checkout = () => {
-    // Implement  checkout logic 
+    // Implement checkout logic
   };
 
   return (
@@ -54,10 +67,9 @@ const Cart: React.FC = () => {
         {localCart.map((product) => (
           <HStack
             key={product._id}
-            border="1px solid #ccc"
             p={3}
             borderRadius="md"
-            mb={4}
+            ml={3}
             alignItems="center"
           >
             <Box>
@@ -65,16 +77,18 @@ const Cart: React.FC = () => {
                 src={product.imageURL}
                 alt={product.name}
                 maxH="100px"
+                maxW="150px"
                 objectFit="cover"
                 mb={2}
               />
             </Box>
-            <Box>
+            <Box ml={"40px"}>
               <Text fontSize="lg" fontWeight="bold">
                 {product.name}
               </Text>
               <Text fontSize="md">Price: ${product.price}</Text>
               <Text fontSize="md">Quantity: {product.quantity}</Text>
+              <Text fontSize="md">Total: ${getTotalPrice(product)}</Text>
               <Button
                 colorScheme="red"
                 size="sm"
@@ -85,13 +99,17 @@ const Cart: React.FC = () => {
             </Box>
           </HStack>
         ))}
-        <Button colorScheme="teal" mt={4} onClick={checkout}>
-          Proceed to Checkout
-        </Button>
+        <Box ml={"70px"}>
+          <Text fontSize="lg" fontWeight="bold" mt={5}>
+            Total : ${getTotalCartPrice()}
+          </Text>
+          <Button colorScheme="teal" mt={4} onClick={checkout}>
+            Proceed to Checkout
+          </Button>
+        </Box>
       </Flex>
     </Layout>
   );
 };
 
 export default Cart;
-//TODO: review this code
