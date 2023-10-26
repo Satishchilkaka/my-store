@@ -63,7 +63,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     const updatedCart = cart.filter((product) => product._id !== productId);
     setCart(updatedCart);
     
-    // Update localStorage with the new cart data immediately
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCart));
   };
 
