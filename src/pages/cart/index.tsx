@@ -8,7 +8,7 @@ interface Product {
   name: string;
   category: string;
   price: number;
-  quantity: number;
+ quantity: number;
   imageURL: string;
 }
 
@@ -16,7 +16,6 @@ const Cart: React.FC = () => {
   const { cart, removeFromCart } = useCart();
   const [localCart, setLocalCart] = useState<Product[]>([]);
 
-  // Initialize localCart with cart data
   useEffect(() => {
     const consolidatedCart: Product[] = [];
 
@@ -43,7 +42,7 @@ const Cart: React.FC = () => {
   };
 
   const checkout = () => {
-    // Implement  checkout logic here
+    // Implement  checkout logic 
   };
 
   return (

@@ -29,7 +29,7 @@ interface Product {
   name: string;
   category: string;
   price: number;
-  quantity: number;
+  quantity: number; // Add quantity to track individual product quantity
   imageURL: string;
 }
 
@@ -42,13 +42,16 @@ const ProductList = () => {
 
   const { cart, addToCart } = useCart();
 
-  console.log("cart", cart);
-
   useEffect(() => {
     async function fetchProducts() {
       try {
         const response = await axios.get(`${api}/v1/products`, {});
-        setProducts(response.data);
+        setProducts(
+          response.data.map((product: Product) => ({
+            ...product,
+            quantity: 1, 
+          }))
+        );
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -59,17 +62,18 @@ const ProductList = () => {
     fetchProducts();
   }, [api]);
 
-  const handleQuantityChange = (productId: string, newQuantity: string) => {
-    const parsedQuantity = parseInt(newQuantity, 10);
+  const handleQuantityChange = (productId: string, newQuantity: number) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId ? { ...product, quantity: newQuantity } : product
+      )
+    );
+  };
 
-    if (!isNaN(parsedQuantity) && parsedQuantity >= 1) {
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
-          product._id === productId
-            ? { ...product, quantity: parsedQuantity }
-            : product
-        )
-      );
+  const handleAddToCart = (product: Product) => {
+    if (product.quantity >= 1) {
+      addToCart({ ...product });
+      handleQuantityChange(product._id, 1);
     }
   };
 
@@ -165,12 +169,13 @@ const ProductList = () => {
                     <NumberInput
                       minWidth="60px"
                       maxWidth="80px"
-                      defaultValue={1}
+                      value={product.quantity}
                       size="sm"
                       min={1}
-                      onChange={(newQuantity) =>
-                        handleQuantityChange(product._id, newQuantity)
-                      }
+                      onChange={(newQuantityString) => {
+                        const newQuantity = parseInt(newQuantityString, 10);
+                        handleQuantityChange(product._id, newQuantity);
+                      }}
                     >
                       <NumberInputField />
                       <NumberInputStepper>
@@ -179,14 +184,9 @@ const ProductList = () => {
                       </NumberInputStepper>
                     </NumberInput>
                   </Flex>
-                  <Button
-  mt={2}
-  colorScheme="teal"
-  onClick={() => addToCart({ ...product })}
->
-  Add to cart
-</Button>
-
+                  <Button mt={2} colorScheme="teal" onClick={() => handleAddToCart(product)}>
+                    Add to cart
+                  </Button>
                 </GridItem>
               ))}
           </Grid>
@@ -197,5 +197,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-// TODO: update cart list
