@@ -18,7 +18,7 @@ export const UploadDoc: React.FC = () => {
       formData.append("document", file);
       
       try {
-        await axios.post("http://localhost:3001/v1/upload-document", formData, {
+        await axios.post("http://localhost:3001/v1/upload-document/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -31,11 +31,9 @@ export const UploadDoc: React.FC = () => {
   };
 
   return (
-    <Center h="100vh">
       <Box>
-        <input type="file" accept="pdf', '.jpeg', '.jpg', '.png', '.doc', '.docx" onChange={handleFileChange} />
+        <input type="file" accept=".pdf, .jpeg, .jpg, .png, .doc, .docx" onChange={handleFileChange} />
         <Button onClick={handleUpload}>Upload Document</Button>
       </Box>
-    </Center>
   );
 };
