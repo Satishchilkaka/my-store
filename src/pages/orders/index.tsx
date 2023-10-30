@@ -1,6 +1,7 @@
 import { Layout } from '@/components/Layout';
 import { Box, Center, Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 
+
 const Orders = () => {
   return (
     <Layout title="Products" noHeader={false} withNoMenus={true}>
@@ -17,6 +18,7 @@ const Orders = () => {
             <Text>Total: ${order.total}</Text>
           </Box>
         ))} */}
+        
       </SimpleGrid>
     </Container>
 </Layout>
