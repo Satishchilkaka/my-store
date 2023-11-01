@@ -23,7 +23,6 @@ const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
 
   useEffect(() => {
-    // Place your API call here
     const fetchData = async () => {
       try {
         const response = await axios.get("/v1/get-documents");
