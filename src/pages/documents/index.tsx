@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
@@ -9,9 +9,17 @@ import {
   Th,
   Td,
   Button,
-  Text
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Input,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { UploadDoc } from '@/components/UploadDoc'
+import { UploadDoc } from "@/components/UploadDoc";
 
 interface Document {
   name: string;
@@ -21,19 +29,68 @@ interface Document {
 
 const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>();
+  const [newDocumentName, setNewDocumentName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/v1/get-documents");
+        const response = await axios.get("http://localhost:3001/v1/get-documents/");
         setDocuments(response.data);
       } catch (error) {
         console.error("Error fetching documents:", error);
       }
     };
-    
+
     fetchData();
   }, []);
+
+  const handleEdit = (document: Document) => {
+    setSelectedDocument(document);
+    onOpen();
+  };
+
+  const handleRename = () => {
+    if (selectedDocument && newDocumentName) {
+      axios
+        .put(`http://localhost:3001/v1/update-document/${selectedDocument.name}`, {
+          newDocumentName: newDocumentName,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const updatedDocuments = documents.map((doc) => {
+              if (doc === selectedDocument) {
+                return { ...doc, name: newDocumentName };
+              }
+              return doc;
+            });
+            setDocuments(updatedDocuments);
+            onClose();
+          }
+        })
+        .catch((error) => {
+          console.error('Error renaming document:', error);
+        });
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedDocument) {
+      axios
+        .delete(`http://localhost:3001/v1/delete-document/${selectedDocument.name}`)
+        .then((response) => {
+          if (response.status === 200) {
+            const updatedDocuments = documents.filter((doc) => doc !== selectedDocument);
+            setDocuments(updatedDocuments);
+            onClose();
+          }
+        })
+        .catch((error) => {
+          console.error('Error deleting document:', error);
+        });
+    }
+  };
 
   return (
     <Box p={4}>
@@ -52,14 +109,47 @@ const Documents: React.FC = () => {
               <Td>{document.name}</Td>
               <Td>{document.uploadDate}</Td>
               <Td>
-                <a href={document.url} target="_blank" rel="noreferrer">
-                  <Button size="sm" colorScheme="blue">Download</Button>
-                </a>
+                <Button
+                  size="sm"
+                  colorScheme="blue"
+                  onClick={() => window.open(document.url, "_blank")}
+                >
+                  Download
+                </Button>
+                <Button
+                  size="sm"
+                  colorScheme="teal"
+                  onClick={() => handleEdit(document)}
+                >
+                  Edit
+                </Button>
               </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Document</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              placeholder="New Document Name"
+              value={newDocumentName}
+              onChange={(e) => setNewDocumentName(e.target.value)}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="teal" mr={3} onClick={handleRename}>
+              Rename
+            </Button>
+            <Button colorScheme="red" onClick={handleDelete}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
