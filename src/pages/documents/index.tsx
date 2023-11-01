@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { UploadDoc } from "@/components/UploadDoc";
 import FilePreview from "@/components/FilePreview";
-import { FaSortUp, FaSortDown } from "react-icons/fa"; 
+import { FaSortUp, FaSortDown } from "react-icons/fa";
 
 interface Document {
   name: string;
@@ -42,7 +42,9 @@ const Documents: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/v1/get-documents/");
+        const response = await axios.get(
+          "http://localhost:3001/v1/get-documents/"
+        );
         setDocuments(response.data);
       } catch (error) {
         console.error("Error fetching documents:", error);
@@ -60,9 +62,12 @@ const Documents: React.FC = () => {
   const handleRename = () => {
     if (selectedDocument && newDocumentName) {
       axios
-        .put(`http://localhost:3001/v1/update-document/${selectedDocument.name}`, {
-          newDocumentName: newDocumentName,
-        })
+        .put(
+          `http://localhost:3001/v1/update-document/${selectedDocument.name}`,
+          {
+            newDocumentName: newDocumentName,
+          }
+        )
         .then((response) => {
           if (response.status === 200) {
             const updatedDocuments = documents.map((doc) => {
@@ -76,7 +81,7 @@ const Documents: React.FC = () => {
           }
         })
         .catch((error) => {
-          console.error('Error renaming document:', error);
+          console.error("Error renaming document:", error);
         });
     }
   };
@@ -84,16 +89,20 @@ const Documents: React.FC = () => {
   const handleDelete = () => {
     if (selectedDocument) {
       axios
-        .delete(`http://localhost:3001/v1/delete-document/${selectedDocument.name}`)
+        .delete(
+          `http://localhost:3001/v1/delete-document/${selectedDocument.name}`
+        )
         .then((response) => {
           if (response.status === 200) {
-            const updatedDocuments = documents.filter((doc) => doc !== selectedDocument);
+            const updatedDocuments = documents.filter(
+              (doc) => doc !== selectedDocument
+            );
             setDocuments(updatedDocuments);
             onClose();
           }
         })
         .catch((error) => {
-          console.error('Error deleting document:', error);
+          console.error("Error deleting document:", error);
         });
     }
   };
@@ -135,7 +144,7 @@ const Documents: React.FC = () => {
   return (
     <Box p={4} mt={"50px"}>
       <UploadDoc />
-      <Box mt={'20px'}>
+      <Box mt={"20px"}>
         <Input
           placeholder="Search by document name"
           value={searchQuery}
@@ -143,58 +152,56 @@ const Documents: React.FC = () => {
         />
       </Box>
       <TableContainer>
+        <Table variant="striped" colorScheme="teal" mt={"50px"}>
+          <Thead>
+            <Tr>
+              <Th fontSize="md" onClick={() => handleSort("name")}>
+                Document Name
+              </Th>
+              <Th fontSize="md" onClick={() => handleSort("uploadDate")}>
+                Upload Date
+                {sortColumn === "uploadDate" && (
+                  <span style={{ cursor: "pointer", marginLeft: "4px" }}>
+                    {sortAsc ? "↑" : "↓"}
+                  </span>
+                )}
+              </Th>
 
-     
-      <Table variant='striped' colorScheme='teal' mt={"50px"}>
-        <Thead>
-          <Tr>
-            <Th fontSize="md" onClick={() => handleSort("name")}>
-              Document Name
-            </Th>
-            <Th fontSize="md" onClick={() => handleSort("uploadDate")}>
-  Upload Date
-  {sortColumn === "uploadDate" && (
-    <span style={{ cursor: "pointer", marginLeft: "4px" }}>
-      {sortAsc ? <FaSortUp /> : <FaSortDown />}
-    </span>
- )}
-</Th>
-
-            <Th fontSize="md">Document Preview</Th>
-            <Th fontSize="md">Action</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {sortedDocuments.map((document, index) => (
-            <Tr key={index}>
-              <Td>{document.name}</Td>
-              <Td>{formatDate(document.uploadDate)}</Td>
-              <Td>
-                <FilePreview url={document.url} name={document.name} />
-              </Td>
-              <Td>
-                <Button
-                  mt={2}
-                  size="md"
-                  colorScheme="blue"
-                  onClick={() => window.open(document.url, "_blank")}
-                >
-                  Download
-                </Button>
-                <Button
-                  mt={2}
-                  size="md"
-                  colorScheme="teal"
-                  ml={"15px"}
-                  onClick={() => handleEdit(document)}
-                >
-                  Edit
-                </Button>
-              </Td>
+              <Th fontSize="md">Document Preview</Th>
+              <Th fontSize="md">Action</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+          <Tbody>
+            {sortedDocuments.map((document, index) => (
+              <Tr key={index}>
+                <Td>{document.name}</Td>
+                <Td>{formatDate(document.uploadDate)}</Td>
+                <Td>
+                  <FilePreview url={document.url} name={document.name} />
+                </Td>
+                <Td>
+                  <Button
+                    mt={2}
+                    size="md"
+                    colorScheme="blue"
+                    onClick={() => window.open(document.url, "_blank")}
+                  >
+                    Download
+                  </Button>
+                  <Button
+                    mt={2}
+                    size="md"
+                    colorScheme="teal"
+                    ml={"15px"}
+                    onClick={() => handleEdit(document)}
+                  >
+                    Edit
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
       </TableContainer>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
