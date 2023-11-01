@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Box, Button, Input, Center, useToast } from "@chakra-ui/react";
+import { Box, Button, Input, Center, useToast, Flex } from "@chakra-ui/react";
 
 export const UploadDoc: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -76,14 +76,20 @@ export const UploadDoc: React.FC = () => {
 
   return (
    
-      <Box>
-        <Input
-          type="file"
-          accept=".pdf, .jpeg, .jpg, .png, .doc, .docx, .txt, .zip"
-          onChange={handleFileChange}
-        />
-        <Button onClick={handleUpload}>Upload Document</Button>
-      </Box>
+    <Flex alignItems="center" borderWidth="1px" p="2" rounded="md">
+      <Input 
+            variant="soft-rounded"
+            colorScheme="green"
+            border={"medium"}
+            borderColor="#999999"
+        type="file"
+        accept=".pdf, .jpeg, .jpg, .png, .doc, .docx, .txt, .zip"
+        onChange={handleFileChange}
+      />
+      <Button mt={2} colorScheme="teal" onClick={handleUpload} ml="2">
+        Upload Document
+      </Button>
+    </Flex>
    
   );
 };

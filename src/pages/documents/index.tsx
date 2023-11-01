@@ -20,6 +20,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { UploadDoc } from "@/components/UploadDoc";
+import FilePreview from "@/components/FilePreview";
 
 interface Document {
   name: string;
@@ -50,6 +51,7 @@ const Documents: React.FC = () => {
     setSelectedDocument(document);
     onOpen();
   };
+
 
   const handleRename = () => {
     if (selectedDocument && newDocumentName) {
@@ -92,41 +94,68 @@ const Documents: React.FC = () => {
     }
   };
 
+  const formatDate = (dateString: any) => {
+  
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  }
+    
+  
+
   return (
-    <Box p={4}>
+    <Box p={4} mt={"50px"}>
       <UploadDoc />
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Document Name</Th>
-            <Th>Upload Date</Th>
-            <Th>Action</Th>
+      <Table variant='striped' colorScheme='teal' mt={"50px"}>
+        <Thead >
+          <Tr >
+            <Th fontSize="xl" > Document Name</Th>
+            <Th fontSize="xl"> Upload Date</Th>
+            <Th fontSize="xl">Action</Th>
+            <Th fontSize="xl">Document Preview</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {documents.map((document, index) => (
-            <Tr key={index}>
-              <Td>{document.name}</Td>
-              <Td>{document.uploadDate}</Td>
-              <Td>
-                <Button
-                  size="sm"
-                  colorScheme="blue"
-                  onClick={() => window.open(document.url, "_blank")}
-                >
-                  Download
-                </Button>
-                <Button
-                  size="sm"
-                  colorScheme="teal"
-                  onClick={() => handleEdit(document)}
-                >
-                  Edit
-                </Button>
+  {documents.map((document, index) => (
+    
+    <Tr key={index}>
+      <Td>{document.name}</Td>
+      <Td>{formatDate(document.uploadDate)}</Td>
+      <Td>
+        <Button
+          mt={2}
+          size="sm"
+          colorScheme="blue"
+          onClick={() => window.open(document.url, "_blank")}
+        >
+          Download
+        </Button>
+        <Button
+          mt={2}
+          size="sm"
+          colorScheme="teal"
+          ml={"15px"}
+          onClick={() => handleEdit(document)}
+        >
+          Edit
+        </Button>
+      </Td>
+      <Td>
+                <FilePreview url={document.url} name={document.name} />
               </Td>
-            </Tr>
-          ))}
-        </Tbody>
+    </Tr>
+  ))}
+</Tbody>
+
+
       </Table>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
