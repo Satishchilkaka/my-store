@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
@@ -18,9 +18,11 @@ import {
   ModalFooter,
   Input,
   useDisclosure,
+  TableContainer,
 } from "@chakra-ui/react";
 import { UploadDoc } from "@/components/UploadDoc";
 import FilePreview from "@/components/FilePreview";
+import { FaSortUp, FaSortDown } from "react-icons/fa"; 
 
 interface Document {
   name: string;
@@ -33,7 +35,9 @@ const Documents: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedDocument, setSelectedDocument] = useState<Document | null>();
   const [newDocumentName, setNewDocumentName] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); // Add search query state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortAsc, setSortAsc] = useState(true);
+  const [sortColumn, setSortColumn] = useState("uploadDate");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,11 +56,6 @@ const Documents: React.FC = () => {
     setSelectedDocument(document);
     onOpen();
   };
-
-  // Filter documents based on search query
-  const filteredDocuments = documents.filter((document) =>
-    document.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const handleRename = () => {
     if (selectedDocument && newDocumentName) {
@@ -113,32 +112,70 @@ const Documents: React.FC = () => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
+  const handleSort = (column: string) => {
+    if (column === sortColumn) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortColumn(column);
+      setSortAsc(true);
+    }
+  };
+
+  const sortedDocuments = [...documents].sort((a, b) => {
+    if (sortColumn === "uploadDate") {
+      if (sortAsc) {
+        return a.uploadDate.localeCompare(b.uploadDate);
+      } else {
+        return b.uploadDate.localeCompare(a.uploadDate);
+      }
+    }
+    return 0;
+  });
+
   return (
     <Box p={4} mt={"50px"}>
       <UploadDoc />
-      <Input
-        placeholder="Search by document name"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <Box mt={'20px'}>
+        <Input
+          placeholder="Search by document name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </Box>
+      <TableContainer>
+
+     
       <Table variant='striped' colorScheme='teal' mt={"50px"}>
         <Thead>
           <Tr>
-            <Th fontSize="xl">Document Name</Th>
-            <Th fontSize="xl">Upload Date</Th>
-            <Th fontSize="xl">Action</Th>
-            <Th fontSize="xl">Document Preview</Th>
+            <Th fontSize="md" onClick={() => handleSort("name")}>
+              Document Name
+            </Th>
+            <Th fontSize="md" onClick={() => handleSort("uploadDate")}>
+  Upload Date
+  {sortColumn === "uploadDate" && (
+    <span style={{ cursor: "pointer", marginLeft: "4px" }}>
+      {sortAsc ? <FaSortUp /> : <FaSortDown />}
+    </span>
+ )}
+</Th>
+
+            <Th fontSize="md">Document Preview</Th>
+            <Th fontSize="md">Action</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {filteredDocuments.map((document, index) => (
+          {sortedDocuments.map((document, index) => (
             <Tr key={index}>
               <Td>{document.name}</Td>
               <Td>{formatDate(document.uploadDate)}</Td>
               <Td>
+                <FilePreview url={document.url} name={document.name} />
+              </Td>
+              <Td>
                 <Button
                   mt={2}
-                  size="sm"
+                  size="md"
                   colorScheme="blue"
                   onClick={() => window.open(document.url, "_blank")}
                 >
@@ -146,7 +183,7 @@ const Documents: React.FC = () => {
                 </Button>
                 <Button
                   mt={2}
-                  size="sm"
+                  size="md"
                   colorScheme="teal"
                   ml={"15px"}
                   onClick={() => handleEdit(document)}
@@ -154,13 +191,11 @@ const Documents: React.FC = () => {
                   Edit
                 </Button>
               </Td>
-              <Td>
-                <FilePreview url={document.url} name={document.name} />
-              </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
+      </TableContainer>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
