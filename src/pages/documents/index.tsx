@@ -33,6 +33,7 @@ const Documents: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedDocument, setSelectedDocument] = useState<Document | null>();
   const [newDocumentName, setNewDocumentName] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // Add search query state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +53,10 @@ const Documents: React.FC = () => {
     onOpen();
   };
 
+  // Filter documents based on search query
+  const filteredDocuments = documents.filter((document) =>
+    document.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleRename = () => {
     if (selectedDocument && newDocumentName) {
@@ -95,7 +100,6 @@ const Documents: React.FC = () => {
   };
 
   const formatDate = (dateString: any) => {
-  
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -107,55 +111,55 @@ const Documents: React.FC = () => {
       hour12: false,
     };
     return new Intl.DateTimeFormat("en-US", options).format(date);
-  }
-    
-  
+  };
 
   return (
     <Box p={4} mt={"50px"}>
       <UploadDoc />
+      <Input
+        placeholder="Search by document name"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       <Table variant='striped' colorScheme='teal' mt={"50px"}>
-        <Thead >
-          <Tr >
-            <Th fontSize="xl" > Document Name</Th>
-            <Th fontSize="xl"> Upload Date</Th>
+        <Thead>
+          <Tr>
+            <Th fontSize="xl">Document Name</Th>
+            <Th fontSize="xl">Upload Date</Th>
             <Th fontSize="xl">Action</Th>
             <Th fontSize="xl">Document Preview</Th>
           </Tr>
         </Thead>
         <Tbody>
-  {documents.map((document, index) => (
-    
-    <Tr key={index}>
-      <Td>{document.name}</Td>
-      <Td>{formatDate(document.uploadDate)}</Td>
-      <Td>
-        <Button
-          mt={2}
-          size="sm"
-          colorScheme="blue"
-          onClick={() => window.open(document.url, "_blank")}
-        >
-          Download
-        </Button>
-        <Button
-          mt={2}
-          size="sm"
-          colorScheme="teal"
-          ml={"15px"}
-          onClick={() => handleEdit(document)}
-        >
-          Edit
-        </Button>
-      </Td>
-      <Td>
+          {filteredDocuments.map((document, index) => (
+            <Tr key={index}>
+              <Td>{document.name}</Td>
+              <Td>{formatDate(document.uploadDate)}</Td>
+              <Td>
+                <Button
+                  mt={2}
+                  size="sm"
+                  colorScheme="blue"
+                  onClick={() => window.open(document.url, "_blank")}
+                >
+                  Download
+                </Button>
+                <Button
+                  mt={2}
+                  size="sm"
+                  colorScheme="teal"
+                  ml={"15px"}
+                  onClick={() => handleEdit(document)}
+                >
+                  Edit
+                </Button>
+              </Td>
+              <Td>
                 <FilePreview url={document.url} name={document.name} />
               </Td>
-    </Tr>
-  ))}
-</Tbody>
-
-
+            </Tr>
+          ))}
+        </Tbody>
       </Table>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
