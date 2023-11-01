@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
@@ -18,11 +18,9 @@ import {
   ModalFooter,
   Input,
   useDisclosure,
-  TableContainer,
 } from "@chakra-ui/react";
 import { UploadDoc } from "@/components/UploadDoc";
 import FilePreview from "@/components/FilePreview";
-import { FaSortUp, FaSortDown } from "react-icons/fa";
 
 interface Document {
   name: string;
@@ -36,8 +34,8 @@ const Documents: React.FC = () => {
   const [selectedDocument, setSelectedDocument] = useState<Document | null>();
   const [newDocumentName, setNewDocumentName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortAsc, setSortAsc] = useState(true);
   const [sortColumn, setSortColumn] = useState("uploadDate");
+  const [sortAsc, setSortAsc] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +56,19 @@ const Documents: React.FC = () => {
     setSelectedDocument(document);
     onOpen();
   };
+
+  const sortedDocuments = [...documents].sort((a, b) => {
+    if (sortColumn === "uploadDate") {
+      return sortAsc
+        ? a.uploadDate.localeCompare(b.uploadDate)
+        : b.uploadDate.localeCompare(a.uploadDate);
+    }
+    return 0;
+  });
+
+  const filteredDocuments = sortedDocuments.filter((document) =>
+    document.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleRename = () => {
     if (selectedDocument && newDocumentName) {
@@ -123,23 +134,14 @@ const Documents: React.FC = () => {
 
   const handleSort = (column: string) => {
     if (column === sortColumn) {
+      // Toggle sort direction if the same column is clicked again
       setSortAsc(!sortAsc);
     } else {
+      // Set a new column to sort and default to ascending
       setSortColumn(column);
       setSortAsc(true);
     }
   };
-
-  const sortedDocuments = [...documents].sort((a, b) => {
-    if (sortColumn === "uploadDate") {
-      if (sortAsc) {
-        return a.uploadDate.localeCompare(b.uploadDate);
-      } else {
-        return b.uploadDate.localeCompare(a.uploadDate);
-      }
-    }
-    return 0;
-  });
 
   return (
     <Box p={4} mt={"50px"}>
@@ -151,58 +153,59 @@ const Documents: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </Box>
-      <TableContainer>
-        <Table variant="striped" colorScheme="teal" mt={"50px"}>
-          <Thead>
-            <Tr>
-              <Th fontSize="md" onClick={() => handleSort("name")}>
-                Document Name
-              </Th>
-              <Th fontSize="md" onClick={() => handleSort("uploadDate")}>
-                Upload Date
-                {sortColumn === "uploadDate" && (
-                  <span style={{ cursor: "pointer", marginLeft: "4px" }}>
-                    {sortAsc ? "↑" : "↓"}
-                  </span>
-                )}
-              </Th>
-
-              <Th fontSize="md">Document Preview</Th>
-              <Th fontSize="md">Action</Th>
+      <Table variant="striped" colorScheme="teal" mt={"50px"}>
+        <Thead>
+          <Tr>
+            <Th
+              fontSize="md"
+              onClick={() => handleSort("name")}
+              style={{ cursor: "pointer" }}
+            >
+              Document Name
+            </Th>
+            <Th fontSize="md" onClick={() => handleSort("uploadDate")}>
+              Upload Date
+              {sortColumn === "uploadDate" && (
+                <span style={{ cursor: "pointer", marginLeft: "4px" }}>
+                  {sortAsc ? "↑" : "↓"}
+                </span>
+              )}
+            </Th>
+            <Th fontSize="md">Document Preview</Th>
+            <Th fontSize="md">Action</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {filteredDocuments.map((document, index) => (
+            <Tr key={index}>
+              <Td>{document.name}</Td>
+              <Td>{formatDate(document.uploadDate)}</Td>
+              <Td>
+                <FilePreview url={document.url} name={document.name} />
+              </Td>
+              <Td>
+                <Button
+                  mt={2}
+                  size="md"
+                  colorScheme="blue"
+                  onClick={() => window.open(document.url, "_blank")}
+                >
+                  Download
+                </Button>
+                <Button
+                  mt={2}
+                  size="md"
+                  colorScheme="teal"
+                  ml={"15px"}
+                  onClick={() => handleEdit(document)}
+                >
+                  Edit
+                </Button>
+              </Td>
             </Tr>
-          </Thead>
-          <Tbody>
-            {sortedDocuments.map((document, index) => (
-              <Tr key={index}>
-                <Td>{document.name}</Td>
-                <Td>{formatDate(document.uploadDate)}</Td>
-                <Td>
-                  <FilePreview url={document.url} name={document.name} />
-                </Td>
-                <Td>
-                  <Button
-                    mt={2}
-                    size="md"
-                    colorScheme="blue"
-                    onClick={() => window.open(document.url, "_blank")}
-                  >
-                    Download
-                  </Button>
-                  <Button
-                    mt={2}
-                    size="md"
-                    colorScheme="teal"
-                    ml={"15px"}
-                    onClick={() => handleEdit(document)}
-                  >
-                    Edit
-                  </Button>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+          ))}
+        </Tbody>
+      </Table>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
