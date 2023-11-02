@@ -38,19 +38,22 @@ const Documents: React.FC = () => {
   const [sortAsc, setSortAsc] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/v1/get-documents/"
-        );
-        setDocuments(response.data);
-      } catch (error) {
-        console.error("Error fetching documents:", error);
-      }
-    };
-
-    fetchData();
+    fetchDocuments(); 
   }, []);
+
+  const fetchDocuments = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/v1/get-documents/");
+      setDocuments(response.data);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+  };
+
+  // fetch latest documents
+  const fetchLatestDocuments = () => {
+    fetchDocuments();
+  };
 
   const handleEdit = (document: Document) => {
     setSelectedDocument(document);
@@ -134,10 +137,8 @@ const Documents: React.FC = () => {
 
   const handleSort = (column: string) => {
     if (column === sortColumn) {
-      // Toggle sort direction if the same column is clicked again
       setSortAsc(!sortAsc);
     } else {
-      // Set a new column to sort and default to ascending
       setSortColumn(column);
       setSortAsc(true);
     }
@@ -145,7 +146,7 @@ const Documents: React.FC = () => {
 
   return (
     <Box p={4} mt={"50px"}>
-      <UploadDoc />
+      <UploadDoc onUpload={fetchLatestDocuments} /> 
       <Box mt={"20px"}>
         <Input
           placeholder="Search by document name"

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Box, Button, Input, Center, useToast, Flex } from "@chakra-ui/react";
+interface UploadDocProps {
+  onUpload: () => void; 
+}
 
-export const UploadDoc: React.FC = () => {
+export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
@@ -56,6 +59,11 @@ export const UploadDoc: React.FC = () => {
             isClosable: true,
           });
           setSelectedFile(null);
+
+          // Fetch the latest documents after a successful upload
+          if (onUpload) {
+            onUpload();
+          }
         } else {
           console.error("File upload failed:", uploadResponse.statusText);
         }
@@ -75,13 +83,12 @@ export const UploadDoc: React.FC = () => {
   };
 
   return (
-   
     <Flex alignItems="center" borderWidth="1px" p="2" rounded="md">
-      <Input 
-            variant="soft-rounded"
-            colorScheme="green"
-            border={"medium"}
-            borderColor="#999999"
+      <Input
+        variant="soft-rounded"
+        colorScheme="green"
+        border={"medium"}
+        borderColor="#999999"
         type="file"
         accept=".pdf, .jpeg, .jpg, .png, .doc, .docx, .txt, .zip"
         onChange={handleFileChange}
@@ -90,6 +97,5 @@ export const UploadDoc: React.FC = () => {
         Upload Document
       </Button>
     </Flex>
-   
   );
 };
