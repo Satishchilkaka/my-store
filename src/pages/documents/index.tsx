@@ -18,6 +18,7 @@ import {
   ModalFooter,
   Input,
   useDisclosure,
+  Text
 } from "@chakra-ui/react";
 import { UploadDoc } from "@/components/UploadDoc";
 import FilePreview from "@/components/FilePreview";
@@ -63,8 +64,8 @@ const Documents: React.FC = () => {
   const sortedDocuments = [...documents].sort((a, b) => {
     if (sortColumn === "uploadDate") {
       return sortAsc
-        ? a.uploadDate.localeCompare(b.uploadDate)
-        : b.uploadDate.localeCompare(a.uploadDate);
+        ? b.uploadDate.localeCompare(a.uploadDate)
+        : a.uploadDate.localeCompare(b.uploadDate);
     }
     return 0;
   });
@@ -177,35 +178,49 @@ const Documents: React.FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {filteredDocuments.map((document, index) => (
-            <Tr key={index}>
-              <Td>{document.name}</Td>
-              <Td>{formatDate(document.uploadDate)}</Td>
-              <Td>
-                <FilePreview url={document.url} name={document.name} />
-              </Td>
-              <Td>
-                <Button
-                  mt={2}
-                  size="md"
-                  colorScheme="blue"
-                  onClick={() => window.open(document.url, "_blank")}
-                >
-                  Download
-                </Button>
-                <Button
-                  mt={2}
-                  size="md"
-                  colorScheme="teal"
-                  ml={"15px"}
-                  onClick={() => handleEdit(document)}
-                >
-                  Edit
-                </Button>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
+  {filteredDocuments.length === 0 ? (
+    <Tr>
+      <Td  ml={5} colSpan={4} align="center">
+      <Text mb={5}>
+      No documents to display. Please upload documents.
+    </Text>
+      </Td>
+      </Tr>
+  
+
+   
+  ) : (
+    filteredDocuments.map((document, index) => (
+      <Tr key={index}>
+        <Td>{document.name}</Td>
+        <Td>{formatDate(document.uploadDate)}</Td>
+        <Td>
+          <FilePreview url={document.url} name={document.name} />
+        </Td>
+        <Td>
+          <Button
+            mt={2}
+            size="md"
+            colorScheme="blue"
+            onClick={() => window.open(document.url, "_blank")}
+          >
+            Download
+          </Button>
+          <Button
+            mt={2}
+            size="md"
+            colorScheme="teal"
+            ml={"15px"}
+            onClick={() => handleEdit(document)}
+          >
+            Edit
+          </Button>
+        </Td>
+      </Tr>
+    ))
+  )}
+</Tbody>
+
       </Table>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
