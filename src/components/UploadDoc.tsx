@@ -8,6 +8,8 @@ import {
   useToast,
   Flex,
   Select,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 
@@ -19,6 +21,8 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState<string[]>([]); // Store categories
+  const [newCategory, setNewCategory] = useState(""); // Input for adding new category
   const toast = useToast();
 
   const validateSelectedFile = (file: File) => {
@@ -62,10 +66,12 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
     }
   };
 
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(event.target.value);
+  };
+
+  const handleNewCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCategory(event.target.value);
   };
 
   const handleUpload = async () => {
@@ -130,10 +136,11 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
             }}
           />
         </label>
+        {selectedFile && <p>Selected File: {selectedFile.name}</p>}
       </Box>
 
       <Box>
-        <Select
+        {/* <Select
           variant="soft-rounded"
           colorScheme="green"
           border={"medium"}
@@ -142,10 +149,46 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
           value={selectedCategory}
           onChange={handleCategoryChange}
         >
-          <option value="Medical">Medical</option>
-          <option value="Transport">Transport</option>
-          <option value="Personal">Personal</option>
-        </Select>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </Select> */}
+        {/* <Input
+          variant="soft-rounded"
+          colorScheme="green"
+          border={"medium"}
+          borderColor="#999999"
+          placeholder="Add New Category"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
+        />
+        <Button
+          mt={2}
+          colorScheme="teal"
+          onClick={handleAddCategory}
+          ml="2"
+          disabled={!newCategory} // Disable if the new category is empty
+        >
+          + Add Category
+        </Button> */}
+           <Box ml={5} mr={5} >
+           <InputGroup>
+           
+        <Input
+         
+          colorScheme="green"
+          
+    borderColor='#4391F2'
+          border={"md"}
+          variant='outline'
+          placeholder="Enter Category or Tag name"
+          value={newCategory}
+          onChange={handleNewCategoryChange}
+        />
+          </InputGroup>
+      </Box>
       </Box>
       <Button
         variant={"primary"}

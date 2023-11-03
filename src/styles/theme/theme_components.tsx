@@ -23,6 +23,22 @@ export const components: ThemeComponents = {
           },
         },
       },
+      secondary: {
+        textTransform: "uppercase",
+        fontWeight: "normal",
+        letterSpacing: "wide",
+        bg: SITECOLORS.primary.grey,
+        color:SITECOLORS.primary.white,
+        _hover: {
+          bg: SITECOLORS.primary.black,
+        },
+        _dark: {
+          bg: SITECOLORS.primary.darkBlue2,
+          _hover: {
+            bg: SITECOLORS.primary.black,
+          },
+        },
+      }
     },
   },
 };

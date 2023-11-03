@@ -199,6 +199,7 @@ const Documents: React.FC = () => {
         </Td>
         <Td>
           <Button
+          variant={"secondary"}
             mt={2}
             size="md"
             colorScheme="blue"
@@ -207,6 +208,7 @@ const Documents: React.FC = () => {
             Download
           </Button>
           <Button
+          variant={"secondary"}
             mt={2}
             size="md"
             colorScheme="teal"
