@@ -1,0 +1,13 @@
+
+.sortable {
+    cursor: pointer;
+  }
+  
+  .sortable-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .sortable-icon {
+    margin-left: 5px; 
+  }

@@ -12,9 +12,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { AiTwotoneFileAdd} from 'react-icons/ai';
+
 
 interface UploadDocProps {
-  onUpload: () => void;
+  onUpload: (category: string) => void; 
 }
 
 export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
@@ -22,8 +24,11 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [newCategory, setNewCategory] = useState("");
-  const [categories, setCategories] = useState<string[]>([]); // Store categories
+  const [categories, setCategories] = useState<string[]>([]); 
+
   const toast = useToast();
+ 
+
 
   const validateSelectedFile = (file: File) => {
     return new Promise<void>((resolve, reject) => {
@@ -66,7 +71,9 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
     }
   };
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedCategory(event.target.value);
   };
 
@@ -78,7 +85,8 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
     } else {
       toast({
         title: "Invalid Category",
-        description: "Category names must be at least 3 characters and contain only letters.",
+        description:
+          "Category names must be at least 3 characters and contain only letters.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -86,11 +94,11 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
     }
   };
 
-  const handleUpload = async () => {
-    if (selectedFile && selectedCategory) {
+ const handleUpload = async () => {
+    if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      formData.append("category", selectedCategory);
+      formData.append("category", selectedCategory || newCategory); 
 
       try {
         const uploadResponse = await axios.post(
@@ -109,7 +117,7 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
           setSelectedFile(null);
 
           if (onUpload) {
-            onUpload();
+            onUpload(selectedCategory || newCategory);
           }
         } else {
           console.error("File upload failed:", uploadResponse.statusText);
@@ -125,59 +133,52 @@ export const UploadDoc: React.FC<UploadDocProps> = ({ onUpload }) => {
           isClosable: true,
         });
       }
+      setNewCategory("");
     } else {
-      console.error("No file selected or category not provided.");
-      toast({
-        title: "Missing Information",
-        description: "Please select a file and a category before uploading.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      console.error("No file selected.");
     }
   };
 
   return (
     <Flex rounded="md">
-      <Box>
-        <label htmlFor="fileInput">
-          <Button variant="primary" as="span">
-            <FaCloudUploadAlt />
-            &nbsp; Choose File
-          </Button>
-          <input
-            type="file"
-            id="fileInput"
-            accept=".pdf, .jpeg, .jpg, .png, .doc, .docx, .txt, .zip"
-            style={{ display: "none" }}
-            onChange={(event) => {
-              handleInputFile(event);
-            }}
-          />
-        </label>
-        {selectedFile && <p>Selected File: {selectedFile.name}</p>}
-      </Box>
+    <Box>
+      <label htmlFor="fileInput">
+        <Button variant={"primary"} as="span">
+          <AiTwotoneFileAdd />
+          &nbsp; Choose File
+        </Button>
+        <input
+          type="file"
+          id="fileInput"
+          accept=".pdf, .jpeg, .jpg, .png, .doc, .docx, .txt, .zip"
+          style={{ display: "none" }}
+          onChange={(event) => {
+            handleInputFile(event);
+          }}
+        />
+      </label>
+      {selectedFile && <p>Selected File: {selectedFile.name}</p>}
+    </Box>
 
-      <Box ml={5} mr={5}>
-        <InputGroup>
-          <Input
-            colorScheme="green"
-            borderColor="#4391F2"
-            border="md"
-            variant="outline"
-            placeholder="Enter Category or Tag name"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
-          />
-<InputLeftAddon>
-  <Button onClick={handleAddCategory}>Add</Button>
-</InputLeftAddon>
-        </InputGroup>
-      </Box>
+    <Box ml={5} mr={5}>
+      <InputGroup>
+        <Input
+          colorScheme="green"
+          borderColor="#4391F2"
+          border="2px solid" 
+          variant="outline"
+          placeholder="Enter Category or Tag name"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
+        />
+      </InputGroup>
+    </Box>
 
-      <Button variant="primary" mt={2} colorScheme="teal" onClick={handleUpload}>
-        Upload Document
-      </Button>
-    </Flex>
+    <Button variant={"primary"} as="span">
+          <FaCloudUploadAlt />
+          &nbsp; Upload Document
+        </Button>
+  
+  </Flex>
   );
 };
